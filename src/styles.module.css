@@ -1,9 +1,49 @@
-/* add css module styles here (optional) */
+body {
+  margin: 0;
+  scroll-behavior: smooth;
+}
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.page-scroller-info {
+  position: fixed;
+  z-index: 99;
+  display: flex;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.info-block p {
+  margin: 0;
+}
+
+.page {
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-number {
+  font-size: 300%;
+  color: black;
+}
+
+.page-nav {
+  height: 50px;
+  border: 2px solid white;
+  position: fixed;
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.page-nav-button {
+  padding: 10px;
+  margin: 10px;
+  color: white;
+  border: 2px solid white;
 }
