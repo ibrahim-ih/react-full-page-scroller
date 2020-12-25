@@ -20,11 +20,19 @@ import 'react-full-page-scroller/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return (
+      <MyComponent indicator nav>
+        <h1 className='page-number'>1</h1>
+
+        <h1 className='page-number'>2</h1>
+
+        <h1 className='page-number'>3</h1>
+      </MyComponent>
+    )
   }
 }
 ```
 
 ## License
 
- © [Ibrahim Haouari](https://github.com/Ibrahim Haouari)
+© [Ibrahim Haouari](https://github.com/Ibrahim-ih)
