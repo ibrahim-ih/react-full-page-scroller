@@ -6,10 +6,10 @@ import Page from './Page'
 import PropTypes from 'prop-types'
 
 export const FullPage = (props) => {
-  const { indicator, nav, children } = props
+  const { indicator, pageNav, children } = props
   return (
     <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
-      {nav && <PageNav />}
+      {pageNav && pageNav.length > 0 && <PageNav />}
       {indicator && <PageIndicator />}
 
       {React.Children.toArray(children).map((child, id) => {
@@ -22,7 +22,7 @@ export const FullPage = (props) => {
               alignItems: 'center',
               justifyContent: 'center'
             }}
-            navTitle='Num 1'
+            pageNav
           >
             {child}
           </Page>
@@ -35,12 +35,12 @@ export const FullPage = (props) => {
 FullPage.propTypes = {
   children: PropTypes.node.isRequired,
   indicator: PropTypes.bool,
-  nav: PropTypes.bool
+  pageNav: PropTypes.array
 }
 
 FullPage.defaultProps = {
   indicator: false,
-  nav: false
+  pageNav: null
 }
 
 export default FullPage
