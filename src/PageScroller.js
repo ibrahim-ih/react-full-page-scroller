@@ -21,7 +21,6 @@ export default class PageScroller extends React.Component {
 
   componentDidMount = () => {
     const { children: childrenProp } = this.props
-    debugger
     this.setState({ children: getValidChildren(childrenProp) })
     window.addEventListener('scroll', this.handleScroll)
   }
@@ -84,11 +83,16 @@ export default class PageScroller extends React.Component {
     if (children && children.length > 0) {
       React.Children.map(children, (child, i) => {
         if (child.type === Page) {
-          if (child.props.navTitle) {
-            navButtons.push({
-              title: child.props.navTitle,
-              index: pageCount
-            })
+          if (child.props.pageNav && child.props.pageNav.length > 0) {
+            const { title, className, style } = child.props.pageNav[pageCount]
+            if (title) {
+              navButtons.push({
+                index: pageCount,
+                title: title,
+                className: className || null,
+                style: style || {}
+              })
+            }
           }
 
           pageCount++
