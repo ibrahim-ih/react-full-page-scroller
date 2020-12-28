@@ -83,11 +83,15 @@ export default class PageScroller extends React.Component {
     if (children && children.length > 0) {
       React.Children.map(children, (child, i) => {
         if (child.type === Page) {
-          if (child.props.pageNav && child.props.pageNav.length > 0 ) {
-            navButtons.push({
-              title: child.props.pageNav[pageCount].title,
-              index: pageCount
-            })
+          if (child.props.pageNav && child.props.pageNav.length > 0) {
+            const { title, className } = child.props.pageNav[pageCount]
+            if (title) {
+              navButtons.push({
+                index: pageCount,
+                title: title,
+                className: className || null
+              })
+            }
           }
 
           pageCount++

@@ -8,7 +8,7 @@ const PageNav = (props) => {
     navButtons.map((buttonInfo, i) => {
       buttons.push(
         <div
-          className='page-nav-button'
+          className={`${buttonInfo.className || 'page-nav-button'}`}
           onClick={() => goToPage(buttonInfo.index)}
           key={i}
         >
