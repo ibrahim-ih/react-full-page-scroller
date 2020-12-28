@@ -10,6 +10,7 @@ const PageNav = (props) => {
         <div
           className={`${buttonInfo.className || 'page-nav-button'}`}
           onClick={() => goToPage(buttonInfo.index)}
+          style={buttonInfo.style}
           key={i}
         >
           {buttonInfo.title}
