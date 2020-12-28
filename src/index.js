@@ -7,11 +7,11 @@ import PropTypes from 'prop-types'
 
 export const FullPage = (props) => {
   const { indicator, pageNav, children } = props
+  debugger
   return (
     <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
       {pageNav && pageNav.length > 0 && <PageNav />}
       {indicator && <PageIndicator />}
-
       {React.Children.toArray(children).map((child, id) => {
         return (
           <Page
@@ -22,7 +22,7 @@ export const FullPage = (props) => {
               alignItems: 'center',
               justifyContent: 'center'
             }}
-            pageNav
+            pageNav={pageNav}
           >
             {child}
           </Page>
