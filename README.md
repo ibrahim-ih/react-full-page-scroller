@@ -22,11 +22,15 @@ class Example extends Component {
   render() {
     return (
       <MyComponent indicator nav>
-        <h1 className='page-number'>1</h1>
-
-        <h1 className='page-number'>2</h1>
-
-        <h1 className='page-number'>3</h1>
+        <div>
+          <h1 className='page-number'>1</h1>
+        </div>
+        <div>
+          <h1 className='page-number'>2</h1>
+        </div>
+        <div>
+          <h1 className='page-number'>3</h1>
+        </div>
       </MyComponent>
     )
   }
