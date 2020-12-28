@@ -24,8 +24,18 @@ const App = () => {
       style: { width: '1rem' }
     }
   ]
+  const pageClasses = [
+    {
+      id: 0,
+      className: 'bg-blue'
+    },
+    {
+      id: 1,
+      className: 'bg-red'
+    }
+  ]
   return (
-    <MyComponent indicator pageNav={nav}>
+    <MyComponent indicator pageClasses={pageClasses} pageNav={nav}>
       <div>
         <h1 className='page-number'>1</h1>
       </div>
