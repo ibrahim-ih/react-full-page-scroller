@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 
 export const FullPage = (props) => {
   const { indicator, pageNav, children } = props
-  debugger
   return (
     <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
       {pageNav && pageNav.length > 0 && <PageNav />}
