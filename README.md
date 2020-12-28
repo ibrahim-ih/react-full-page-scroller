@@ -43,6 +43,7 @@ class Example extends Component {
 | --------- | ------ |
 | pageNav    | Object |
 | indicator    | bool |
+| pageClasses    | string |
 
 
 #### Page Nav Object
@@ -87,6 +88,52 @@ const PageNavExample  {
 
     return (
       <MyComponent pageNav={navExample}>
+        <div>
+          <h1 className='page-number'>1</h1>
+        </div>
+        <div>
+          <h1 className='page-number'>2</h1>
+        </div>
+        <div>
+          <h1 className='page-number'>3</h1>
+        </div>
+      </MyComponent>
+    )
+}
+```
+
+
+#### Page Classes
+You can add a class name for every page
+
+| Name | Type   | Required                                                  |Description                                                  |
+| --------- | ------ |------ | ------------------------------------------------------------ |
+| id   | number |Yes | id for the object.             |
+| className    | string |Yes | the className.                                |
+
+##### Exemple
+
+```jsx
+import React, { Component } from 'react'
+
+import MyComponent from 'react-full-page-scroller'
+import 'react-full-page-scroller/dist/index.css'
+
+const PageNavExample  {
+
+  const pageClasses = [
+    {
+      id: 0,
+      className: 'bg-blue'
+    },
+    {
+      id: 1,
+      className: 'bg-red'
+    }
+  ]
+
+    return (
+      <MyComponent pageClasses={pageClasses}>
         <div>
           <h1 className='page-number'>1</h1>
         </div>
