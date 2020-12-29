@@ -77,6 +77,7 @@ export default class PageScroller extends React.Component {
     let pageIndicator
     let pageNav
     const navButtons = []
+    const indicatorArray = []
     let pageCount = 0
 
     const { children } = this.state
@@ -98,6 +99,13 @@ export default class PageScroller extends React.Component {
           pageCount++
           childElements.push(child)
         } else if (child.type === PageIndicator) {
+          if (child.props.indicatorStyle || child.props.indicatorStyleActive) {
+            const { indicatorStyle, indicatorStyleActive } = child.props
+            indicatorArray.push({
+              indicatorStyle: indicatorStyle,
+              indicatorStyleActive: indicatorStyleActive
+            })
+          }
           pageIndicator = child
         } else if (child.type === PageNav) {
           pageNav = child
@@ -112,7 +120,8 @@ export default class PageScroller extends React.Component {
         React.cloneElement(pageIndicator, {
           pageCount: this.pages,
           activePage: this.state.pageIndex,
-          goToPage: this.goToPage
+          goToPage: this.goToPage,
+          indicatorArray: indicatorArray
         })
       )
     }

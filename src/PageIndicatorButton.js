@@ -2,29 +2,46 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const PageIndicatorButton = (props) => {
-  const { goToPage, pageIndex, active } = props
+  const {
+    goToPage,
+    pageIndex,
+    active,
+    indicatorStyle,
+    indicatorStyleActive
+  } = props
 
-  const indicatorStyle = {
-    height: '8px',
-    width: active ? '20px' : '8px',
-    margin: '10px',
-    borderRadius: '4px',
-    backgroundColor: 'white',
-    transition: 'width 500ms ease'
-  }
+  const [style, setStyle] = React.useState({})
 
-  return <div style={indicatorStyle} onClick={() => goToPage(pageIndex)} />
+  React.useMemo(() => {
+    let result = indicatorStyle
+    if (active) {
+      result = { ...indicatorStyle, ...indicatorStyleActive }
+    }
+    setStyle(result)
+  }, [indicatorStyle, indicatorStyleActive])
+
+  return <div style={style} onClick={() => goToPage(pageIndex)} />
 }
 
 PageIndicatorButton.propTypes = {
   goToPage: PropTypes.func,
   pageIndex: PropTypes.number,
-  active: PropTypes.bool
+  active: PropTypes.bool,
+  indicatorStyle: PropTypes.object,
+  indicatorStyleActive: PropTypes.object
 }
 PageIndicatorButton.defaultProps = {
-  goToPage: () => {},
   pageIndex: 1,
-  active: false
+  active: false,
+  indicatorStyle: {
+    height: '8px',
+    width: '8px',
+    margin: '10px',
+    borderRadius: '4px',
+    backgroundColor: 'white',
+    transition: 'width 500ms ease'
+  },
+  indicatorStyleActive: { width: '20px' }
 }
 
 export default PageIndicatorButton

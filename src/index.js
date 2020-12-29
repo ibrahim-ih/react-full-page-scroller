@@ -6,11 +6,22 @@ import Page from './Page'
 import PropTypes from 'prop-types'
 
 export const FullPage = (props) => {
-  const { indicator, pageNav, pageClasses, children } = props
+  const {
+    pageNav,
+    pageClasses,
+    indicatorStyle,
+    indicatorStyleActive,
+    children
+  } = props
   return (
     <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
       {pageNav && pageNav.length > 0 && <PageNav />}
-      {indicator && <PageIndicator />}
+      {indicatorStyle && (
+        <PageIndicator
+          indicatorStyle={indicatorStyle}
+          indicatorStyleActive={indicatorStyleActive}
+        />
+      )}
       {React.Children.toArray(children).map((child, id) => {
         return (
           <Page
@@ -33,12 +44,12 @@ export const FullPage = (props) => {
 
 FullPage.propTypes = {
   children: PropTypes.node.isRequired,
-  indicator: PropTypes.bool,
+  indicatorStyle: PropTypes.object,
   pageNav: PropTypes.array
 }
 
 FullPage.defaultProps = {
-  indicator: false,
+  indicator: null,
   pageNav: null
 }
 
