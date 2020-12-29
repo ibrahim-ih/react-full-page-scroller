@@ -34,8 +34,18 @@ const App = () => {
       className: 'bg-red'
     }
   ]
+  const  indicatorStyle = {
+    height: '8px',
+    width: '8px',
+    margin: '10px',
+    borderRadius: '4px',
+    backgroundColor: 'white',
+    transition: 'width 500ms ease'
+  }
+  const indicatorStyleActive= { width: '20px' }
+
   return (
-    <MyComponent indicator pageClasses={pageClasses} pageNav={nav}>
+    <MyComponent indicator pageClasses={pageClasses} pageNav={nav} indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
       <div>
         <h1 className='page-number'>1</h1>
       </div>
