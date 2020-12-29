@@ -3,18 +3,27 @@ import PageIndicatorButton from './PageIndicatorButton'
 import PropTypes from 'prop-types'
 
 const PageIndicator = (props) => {
-  const { pageCount, activePage, goToPage, style } = props
+  const {
+    pageCount,
+    activePage,
+    goToPage,
+    style,
+    indicatorStyle,
+    indicatorStyleActive
+  } = props
   const renderIndicators = () => {
     const count = pageCount
     const indicators = []
-
     for (let i = 0; i < count; i++) {
+      const active = i === activePage
       indicators.push(
         <PageIndicatorButton
-          active={i === activePage}
+          active={active}
           pageIndex={i}
           goToPage={goToPage}
           key={i}
+          indicatorStyle={indicatorStyle}
+          indicatorStyleActive={active && indicatorStyleActive}
         />
       )
     }
