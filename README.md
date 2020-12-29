@@ -10,6 +10,10 @@
 npm install --save react-full-page-scroller
 ```
 
+## Demo
+
+![](https://github.com/ibrahim-ih/react-full-page-scroller/tree/master/example/src/react-full-page-scroller.gif)
+
 ## Usage
 
 ```jsx
