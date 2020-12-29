@@ -13,33 +13,37 @@ export const FullPage = (props) => {
     indicatorStyleActive,
     children
   } = props
-  return (
-    <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
-      {pageNav && pageNav.length > 0 && <PageNav />}
-      {indicatorStyle && (
-        <PageIndicator
-          indicatorStyle={indicatorStyle}
-          indicatorStyleActive={indicatorStyleActive}
-        />
-      )}
-      {React.Children.toArray(children).map((child, id) => {
-        return (
-          <Page
-            key={`react-full-page-${id}`}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            pageNav={pageNav}
-            pageClasses={(pageClasses[id] || {}).className}
-          >
-            {child}
-          </Page>
-        )
-      })}
-    </PageScroller>
-  )
+  if (typeof window !== 'undefined') {
+    return (
+      <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
+        {pageNav && pageNav.length > 0 && <PageNav />}
+        {indicatorStyle && (
+          <PageIndicator
+            indicatorStyle={indicatorStyle}
+            indicatorStyleActive={indicatorStyleActive}
+          />
+        )}
+        {React.Children.toArray(children).map((child, id) => {
+          return (
+            <Page
+              key={`react-full-page-${id}`}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              pageNav={pageNav}
+              pageClasses={(pageClasses[id] || {}).className}
+            >
+              {child}
+            </Page>
+          )
+        })}
+      </PageScroller>
+    )
+  } else {
+    return null
+  }
 }
 
 FullPage.propTypes = {
