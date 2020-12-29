@@ -39,22 +39,23 @@ class Example extends Component {
 
 ### Props
 
-| Prop Name | Type   |
-| --------- | ------ |
-| pageNav    | Object |
-| indicator    | bool |
-| pageClasses    | string |
-
+| Prop Name            | Type   |
+| -------------------- | ------ |
+| pageNav              | Object |
+| pageClasses          | array  |
+| indicatorStyle       | object |
+| indicatorStyleActive | object |
 
 #### Page Nav Object
+
 You can customize every button in the nav page
 
-| Name | Type   | Required                                                  |Description                                                  |
-| --------- | ------ |------ | ------------------------------------------------------------ |
-| id   | number |Yes | id for the object.             |
-| title    | string |Yes | title of the nav button.                                |
-| className     | string | No | the className of the page nav button. |
-| style     | object |No | A custom style for the page nav button. |
+| Name      | Type   | Required | Description                             |
+| --------- | ------ | -------- | --------------------------------------- |
+| id        | number | Yes      | id for the object.                      |
+| title     | string | Yes      | title of the nav button.                |
+| className | string | No       | the className of the page nav button.   |
+| style     | object | No       | A custom style for the page nav button. |
 
 ##### Exemple
 
@@ -102,14 +103,14 @@ const PageNavExample  {
 }
 ```
 
-
 #### Page Classes
+
 You can add a class name for every page
 
-| Name | Type   | Required                                                  |Description                                                  |
-| --------- | ------ |------ | ------------------------------------------------------------ |
-| id   | number |Yes | id for the object.             |
-| className    | string |Yes | the className.                                |
+| Name      | Type   | Required | Description        |
+| --------- | ------ | -------- | ------------------ |
+| id        | number | Yes      | id for the object. |
+| className | string | Yes      | the className.     |
 
 ##### Exemple
 
@@ -134,6 +135,51 @@ const PageNavExample  {
 
     return (
       <MyComponent pageClasses={pageClasses}>
+        <div>
+          <h1 className='page-number'>1</h1>
+        </div>
+        <div>
+          <h1 className='page-number'>2</h1>
+        </div>
+        <div>
+          <h1 className='page-number'>3</h1>
+        </div>
+      </MyComponent>
+    )
+}
+```
+
+#### Indicator Style
+
+You can add an indicator by adding the two props indicatorStyle and indicatorStyleActive
+
+| Name                 | Type   | Required | Description                                                    |
+| -------------------- | ------ | -------- | -------------------------------------------------------------- |
+| indicatorStyle       | object | Yes      | the indicator default style is required to show the indicator. |
+| indicatorStyleActive | object | No       | the style of the active indicator.                             |
+
+##### Exemple
+
+```jsx
+import React, { Component } from 'react'
+
+import MyComponent from 'react-full-page-scroller'
+import 'react-full-page-scroller/dist/index.css'
+
+const PageNavExample  {
+
+ const  indicatorStyle = {
+    height: '8px',
+    width: '8px',
+    margin: '10px',
+    borderRadius: '4px',
+    backgroundColor: 'white',
+    transition: 'width 500ms ease'
+  }
+  const indicatorStyleActive= { width: '20px' }
+
+    return (
+      <MyComponent indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
         <div>
           <h1 className='page-number'>1</h1>
         </div>
