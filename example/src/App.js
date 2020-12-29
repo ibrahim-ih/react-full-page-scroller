@@ -45,7 +45,7 @@ const App = () => {
   const indicatorStyleActive= { width: '20px' }
 
   return (
-    <MyComponent indicator pageClasses={pageClasses} pageNav={nav} indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
+    <MyComponent pageClasses={pageClasses} pageNav={nav} indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
       <div>
         <h1 className='page-number'>1</h1>
       </div>

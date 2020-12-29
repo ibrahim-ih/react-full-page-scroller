@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 
 export const FullPage = (props) => {
   const {
-    indicator,
     pageNav,
     pageClasses,
     indicatorStyle,
@@ -17,7 +16,7 @@ export const FullPage = (props) => {
   return (
     <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
       {pageNav && pageNav.length > 0 && <PageNav />}
-      {indicator && (
+      {indicatorStyle && (
         <PageIndicator
           indicatorStyle={indicatorStyle}
           indicatorStyleActive={indicatorStyleActive}
@@ -45,12 +44,12 @@ export const FullPage = (props) => {
 
 FullPage.propTypes = {
   children: PropTypes.node.isRequired,
-  indicator: PropTypes.bool,
+  indicatorStyle: PropTypes.object,
   pageNav: PropTypes.array
 }
 
 FullPage.defaultProps = {
-  indicator: false,
+  indicator: null,
   pageNav: null
 }
 
