@@ -1,10 +1,13 @@
 {
   "name": "react-full-page-scroller",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A react module for full page scroll",
   "author": "Ibrahim Haouari",
   "license": "MIT",
-  "repository": "npx create-react-library",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": "git://github.com/ibrahim-ih/react-full-page-scroller.git",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -50,5 +53,11 @@
   },
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "react",
+    "reactjs",
+    "ssr",
+    "javascript"
   ]
 }
