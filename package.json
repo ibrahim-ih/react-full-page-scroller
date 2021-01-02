@@ -1,11 +1,11 @@
 {
   "name": "react-full-page-scroller",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A react module for full page scroll",
   "author": "Ibrahim Haouari",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/ibrahim-ih"
   },
   "repository": "git://github.com/ibrahim-ih/react-full-page-scroller.git",
   "main": "dist/index.js",
