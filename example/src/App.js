@@ -9,19 +9,19 @@ const App = () => {
       id: 1,
       title: 'title 1',
       className: 'page-nav-button',
-      style: { width: '1rem' }
+      style: { width: '100%' }
     },
     {
       id: 2,
       title: 'title 2',
       className: 'page-nav-button',
-      style: { width: '1rem' }
+      style: { width: '100%' }
     },
     {
       id: 3,
       title: 'title 3',
       className: 'page-nav-button',
-      style: { width: '1rem' }
+      style: { width: '100%' }
     }
   ]
   const indicatorStyle = {
