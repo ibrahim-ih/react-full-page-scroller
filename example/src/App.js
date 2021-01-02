@@ -24,17 +24,7 @@ const App = () => {
       style: { width: '1rem' }
     }
   ]
-  const pageClasses = [
-    {
-      id: 0,
-      className: 'bg-blue'
-    },
-    {
-      id: 1,
-      className: 'bg-red'
-    }
-  ]
-  const  indicatorStyle = {
+  const indicatorStyle = {
     height: '8px',
     width: '8px',
     margin: '10px',
@@ -42,17 +32,42 @@ const App = () => {
     backgroundColor: 'white',
     transition: 'width 500ms ease'
   }
-  const indicatorStyleActive= { width: '20px' }
+  const indicatorStyleActive = { width: '20px' }
 
   return (
-    <MyComponent pageClasses={pageClasses} pageNav={nav} indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
-      <div>
+    <MyComponent
+      pageNav={nav}
+      indicatorStyle={indicatorStyle}
+      indicatorStyleActive={indicatorStyleActive}
+    >
+      <div
+        className='bg-blue'
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
         <h1 className='page-number'>1</h1>
       </div>
-      <div>
+      <div
+        className='bg-green'
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
         <h1 className='page-number'>2</h1>
       </div>
-      <div>
+      <div
+        className='bg-red'
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
         <h1 className='page-number'>3</h1>
       </div>
     </MyComponent>

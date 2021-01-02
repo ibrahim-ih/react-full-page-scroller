@@ -6,13 +6,7 @@ import Page from './Page'
 import PropTypes from 'prop-types'
 
 export const FullPage = (props) => {
-  const {
-    pageNav,
-    pageClasses,
-    indicatorStyle,
-    indicatorStyleActive,
-    children
-  } = props
+  const { pageNav, indicatorStyle, indicatorStyleActive, children } = props
   if (typeof window !== 'undefined') {
     return (
       <PageScroller style={{ display: 'flex', flexDirection: 'column' }}>
@@ -25,16 +19,7 @@ export const FullPage = (props) => {
         )}
         {React.Children.toArray(children).map((child, id) => {
           return (
-            <Page
-              key={`react-full-page-${id}`}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-              pageNav={pageNav}
-              pageClasses={(pageClasses[id] || {}).className}
-            >
+            <Page key={`react-full-page-${id}`} pageNav={pageNav}>
               {child}
             </Page>
           )
