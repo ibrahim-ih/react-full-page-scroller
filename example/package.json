@@ -12,8 +12,9 @@
   "dependencies": {
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
+    "react-full-page-scroller": "file:..",
     "react-scripts": "file:../node_modules/react-scripts",
-    "react-full-page-scroller": "file:.."
+    "react-syntax-highlighter": "^15.4.4"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
