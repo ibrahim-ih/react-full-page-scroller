@@ -28,7 +28,7 @@ body {
 
 .page-number {
   font-size: 300%;
-  color: black;
+  color: #f5f0e1;
 }
 
 .page-nav {
@@ -48,11 +48,11 @@ body {
   cursor: pointer;
 }
 .bg-blue {
-  background-color: blue;
+  background-color: #1e3d59;
 }
 .bg-red {
-  background-color: red;
+  background-color: #ffc13b;
 }
 .bg-green {
-  background-color: green;
+  background-color: #ff6e40;
 }
