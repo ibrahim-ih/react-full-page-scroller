@@ -4,14 +4,19 @@
     "standard",
     "standard-react",
     "plugin:prettier/recommended",
+    "plugin:jest/recommended",
     "prettier/standard",
-    "prettier/react"
+    "prettier/react",
+    "airbnb",
+    "prettier"
   ],
   "env": {
-    "node": true
+    "node": true,
+    "es2021": true,
+    "jest/globals": true
   },
   "parserOptions": {
-    "ecmaVersion": 2020,
+    "ecmaVersion": 2021,
     "ecmaFeatures": {
       "legacyDecorators": true,
       "jsx": true
