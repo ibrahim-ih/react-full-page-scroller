@@ -8,12 +8,8 @@ const Page = (props) => {
     width: '100vw',
     ...cleanedStyle
   }
-  console.log(parent.type)
+  const { props: { children = [] } = {} } = parent || {}
   console.log(parent)
-  const {
-    props: { children }
-  } = parent
-
   return (
     <div
       className={((parent || {}).props || {}).className}
