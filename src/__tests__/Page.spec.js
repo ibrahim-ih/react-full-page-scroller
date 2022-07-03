@@ -4,14 +4,12 @@ import Page from '../Page'
 
 const props = {
   style: { width: '100%' },
-  children: {
-    parent: {
+  parent: {
       props: {
-        children: 'mock-children',
+        children: ['mock-children'],
         className: 'mock-class-name',
-        style: 'mock-parent-style'
+        style: {width: 'mock-parent-style'}
       }
-    }
   }
 }
 
