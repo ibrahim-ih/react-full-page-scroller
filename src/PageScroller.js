@@ -1,10 +1,45 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PageNav from './PageNav'
 import Page from './Page'
 import PageIndicator from './PageIndicator'
 import { getValidChildren } from './helper'
 
 export default class PageScroller extends React.Component {
+  // proptypes
+  static propTypes = {
+    children: PropTypes.node,
+    navButtons: PropTypes.arrayOf(
+      PropTypes.shape({
+        index: PropTypes.number,
+        title: PropTypes.string,
+        className: PropTypes.string,
+        style: PropTypes.object
+      }),
+    ),
+    goToPage: PropTypes.func,
+    pageIndex: PropTypes.number,
+    indicatorStyle: PropTypes.object,
+    indicatorStyleActive: PropTypes.object
+  }
+  // defaultProps
+  static defaultProps = {
+    children: null,
+    navButtons: [],
+    goToPage: () => {},
+    pageIndex: 0,
+    indicatorStyle: {
+      height: '100vh',
+      position: 'fixed',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
+    },
+    indicatorStyleActive: {
+      backgroundColor: '#fff'
+    },
+  }
+
   constructor(props) {
     super(props)
 
@@ -21,6 +56,7 @@ export default class PageScroller extends React.Component {
 
   componentDidMount = () => {
     const { children: childrenProp } = this.props
+    debugger
     this.setState({ children: getValidChildren(childrenProp) })
     window.addEventListener('scroll', this.handleScroll)
   }

@@ -43,18 +43,29 @@ const PageIndicator = (props) => {
   return <div style={pageIndicatorStyle}>{renderIndicators()}</div>
 }
 
-PageIndicatorButton.propTypes = {
-  goToPage: PropTypes.func,
+// propTypes
+PageIndicator.propTypes = {
   pageCount: PropTypes.number,
   activePage: PropTypes.number,
-  style: PropTypes.object
+  goToPage: PropTypes.func,
+  style: PropTypes.object,
+  indicatorStyle: PropTypes.object,
+  indicatorStyleActive: PropTypes.object
 }
-
-PageIndicatorButton.defaultProps = {
-  goToPage: () => {},
+PageIndicator.defaultProps = {
   pageCount: 1,
-  activePage: 1,
-  style: {}
+  activePage: 0,
+  goToPage: () => {},
+  style: {},
+  indicatorStyle: {
+    height: '8px',
+    width: '8px',
+    margin: '10px',
+    borderRadius: '4px',
+    backgroundColor: 'white',
+    transition: 'width 500ms ease'
+  },
+  indicatorStyleActive: { width: '20px' }
 }
 
 export default PageIndicator

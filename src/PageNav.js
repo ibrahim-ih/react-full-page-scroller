@@ -24,7 +24,14 @@ const PageNav = (props) => {
 }
 
 PageNav.propTypes = {
-  navButtons: PropTypes.array,
+  navButtons: PropTypes.arrayOf(
+    PropTypes.shape({
+      index: PropTypes.number,
+      title: PropTypes.string,
+      className: PropTypes.string,
+      style: PropTypes.object
+    })
+  ),
   goToPage: PropTypes.func
 }
 

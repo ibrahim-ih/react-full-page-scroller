@@ -31,15 +31,29 @@ export const FullPage = (props) => {
   }
 }
 
+// define propTypes
 FullPage.propTypes = {
-  children: PropTypes.node.isRequired,
+  pageNav: PropTypes.array,
   indicatorStyle: PropTypes.object,
-  pageNav: PropTypes.array
+  indicatorStyleActive: PropTypes.object,
+  children: PropTypes.node,
 }
 
+// defaultProps
 FullPage.defaultProps = {
-  indicator: null,
-  pageNav: null
+  pageNav: [],
+  indicatorStyle: {
+    height: '100vh',
+    position: 'fixed',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  indicatorStyleActive: {
+    backgroundColor: '#fff',
+  },
+  children: null,
 }
+
 
 export default FullPage
