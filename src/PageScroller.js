@@ -56,7 +56,6 @@ export default class PageScroller extends React.Component {
 
   componentDidMount = () => {
     const { children: childrenProp } = this.props
-    debugger
     this.setState({ children: getValidChildren(childrenProp) })
     window.addEventListener('scroll', this.handleScroll)
   }
