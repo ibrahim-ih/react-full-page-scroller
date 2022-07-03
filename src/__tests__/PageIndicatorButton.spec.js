@@ -25,4 +25,10 @@ describe('PageIndicatorButton Component', () => {
       />
     `)
   })
+
+  it('calls goToPage function when clicked', () => {
+    const { container } = render(<PageIndicatorButton {...props} />)
+    fireEvent.click(container.firstChild)
+    expect(props.goToPage).toHaveBeenCalledTimes(1)
+  })
 })
