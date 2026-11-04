@@ -12,7 +12,7 @@ npm install --save react-full-page-scroller
 
 ## Demo
 
-![](https://raw.githubusercontent.com/ibrahim-ih/react-full-page-scroller/master/example/src/react-full-page-scroller.gif)
+![](https://raw.githubusercontent.com/ibrahim-ih/react-full-page-scroller/develop/example/src/react-full-page-scroller.gif)
 
 ## Usage
 
