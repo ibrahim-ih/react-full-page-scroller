@@ -14,6 +14,9 @@
     "jest": true,
     "jest/globals": true
   },
+  "globals": {
+    "globalThis": "readonly"
+  },
   "parserOptions": {
     "ecmaVersion": 2021,
     "ecmaFeatures": {
@@ -35,6 +38,14 @@
     "import/export": 0
   },
   "overrides": [
+    {
+      "files": ["*.js", "*.jsx"],
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+      }
+    },
     {
       "files": ["*.ts", "*.tsx"],
       "rules": {

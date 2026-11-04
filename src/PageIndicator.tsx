@@ -50,7 +50,7 @@ const PageIndicator = ({
             goToPage={goToPage}
             key={index}
             indicatorStyle={indicatorStyle}
-            indicatorStyleActive={active ? indicatorStyleActive : undefined}
+            indicatorStyleActive={indicatorStyleActive}
           />
         )
       })}
