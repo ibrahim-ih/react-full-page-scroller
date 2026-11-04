@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
-import { act } from 'react'
 
 export const createRenderer = () => {
   const container = document.createElement('div')

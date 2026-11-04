@@ -1,5 +1,4 @@
-import React from 'react'
-import { act } from 'react'
+import React, { act } from 'react'
 import { Simulate } from 'react-dom/test-utils'
 import FullPage, { FullPage as NamedFullPage } from '.'
 import { createRenderer } from './test-utils'

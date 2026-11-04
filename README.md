@@ -10,6 +10,8 @@
 npm install --save react-full-page-scroller
 ```
 
+The package includes TypeScript declarations for its component props and page navigation items.
+
 ## Demo
 
 ![](https://raw.githubusercontent.com/ibrahim-ih/react-full-page-scroller/master/example/src/react-full-page-scroller.gif)
@@ -43,11 +45,11 @@ class Example extends Component {
 
 ### Props
 
-| Prop Name            | Type   |
-| -------------------- | ------ |
-| pageNav              | Object |
-| indicatorStyle       | object |
-| indicatorStyleActive | object |
+| Prop Name            | Type               | Required |
+| -------------------- | ------------------ | -------- |
+| pageNav              | `PageNavItem[]`    | No       |
+| indicatorStyle       | `CSSProperties`    | No       |
+| indicatorStyleActive | `CSSProperties`    | No       |
 
 #### Page Nav Object
 
@@ -55,7 +57,7 @@ You can customize every button in the nav page
 
 | Name      | Type   | Required | Description                             |
 | --------- | ------ | -------- | --------------------------------------- |
-| id        | number | Yes      | id for the object.                      |
+| id        | number | No       | id for the object.                      |
 | title     | string | Yes      | title of the nav button.                |
 | className | string | No       | the className of the page nav button.   |
 | style     | object | No       | A custom style for the page nav button. |
