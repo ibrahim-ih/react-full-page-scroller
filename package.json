@@ -40,6 +40,7 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.test.{js,jsx,ts,tsx}",
       "!src/__tests__/**",
+      "!src/**/*.spec.{js,jsx,ts,tsx}",
       "!src/setupTests.ts",
       "!src/test-utils.js"
     ]
