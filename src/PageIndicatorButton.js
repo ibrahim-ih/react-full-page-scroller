@@ -2,23 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const PageIndicatorButton = (props) => {
-  const {
-    goToPage,
-    pageIndex,
-    active,
-    indicatorStyle,
-    indicatorStyleActive
-  } = props
-
-  const [style, setStyle] = React.useState({})
-
-  React.useMemo(() => {
-    let result = indicatorStyle
-    if (active) {
-      result = { ...indicatorStyle, ...indicatorStyleActive }
-    }
-    setStyle(result)
-  }, [indicatorStyle, indicatorStyleActive])
+  const { goToPage, pageIndex, active, indicatorStyle, indicatorStyleActive } =
+    props
+  const style = active
+    ? { ...indicatorStyle, ...indicatorStyleActive }
+    : indicatorStyle
 
   return <div style={style} onClick={() => goToPage(pageIndex)} />
 }
