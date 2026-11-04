@@ -92,13 +92,17 @@ release flow; merging into `develop` does not change the default branch.
 
 ## Installation, caching, and versions
 
-- CI uses Node 22 on GitHub-hosted Ubuntu. This is a validated CI toolchain, not
+- CI uses Node 24 (bundled npm 11) on GitHub-hosted Ubuntu. This is a validated CI toolchain, not
   a change to the package's advertised Node engine range.
 - `npm ci --ignore-scripts --no-audit --no-fund` respects each checked-in lockfile.
   Skipping lifecycle scripts prevents the root `prepare` build and demo-linked
   package preparation from silently rebuilding. Both clean installs and all
   existing build/test commands were validated with lifecycle scripts disabled.
   If a future dependency requires an install hook, review this policy explicitly.
+- Node 22's bundled npm 10 was found in the initial hosted run to execute
+  `prepare` during `npm pack --ignore-scripts`, rebuilding and polluting the JSON
+  manifest. Node 24's bundled npm 11 honors the flag; verify packaging with the
+  bundled npm version when changing toolchains, not just the Node executable.
 - Cache npm's download cache, not `node_modules`, using both lockfiles as the
   cache key input. Each job still performs a clean deterministic install.
 - First-party Actions are pinned to full commit SHAs with readable release
@@ -179,7 +183,7 @@ approval requirements. No publishing token is needed for this CI implementation.
 
 ## Validation and benefits
 
-Local validation used Node 22, clean locked root/demo installs with scripts
+Local validation used Node 24 with its bundled npm 11, clean locked root/demo installs with scripts
 disabled, ESLint, both TypeScript projects, all 15 library suites (62 tests),
 the demo test, library/declaration and production demo builds, package contents,
 `actionlint`, shell syntax checks, and change-detection regression scenarios.
@@ -206,6 +210,6 @@ Files changed or created:
 Remaining administrator/maintainer decisions: enable the required merge gate,
 verify allowed Actions and fork approval policies, disable any externally enabled
 Travis integration, choose automated deployment/publishing policies, establish a
-supported runtime matrix (the old `node >=10` claim is not certified by Node 22
+supported runtime matrix (the old `node >=10` claim is not certified by Node 24
 CI), and evaluate application dependency upgrades separately. No production
 deployment or registry upload was performed as part of this audit.
