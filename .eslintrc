@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "standard",
     "standard-react",
@@ -7,12 +7,10 @@
     "plugin:jest/recommended",
     "prettier/standard",
     "prettier/react",
-    "airbnb",
     "prettier"
   ],
   "env": {
     "node": true,
-    "es2021": true,
     "jest": true,
     "jest/globals": true
   },
@@ -25,7 +23,7 @@
   },
   "settings": {
     "react": {
-      "version": "16"
+      "version": "detect"
     }
   },
   "rules": {
@@ -35,5 +33,14 @@
     "react/jsx-fragments": 0,
     "react/no-unused-prop-types": 0,
     "import/export": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": 0,
+        "no-use-before-define": 0
+      }
+    }
+  ]
 }

@@ -10,21 +10,25 @@
   "repository": "git://github.com/ibrahim-ih/react-full-page-scroller.git",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "types": "dist/types/index.d.ts",
+  "source": "src/index.tsx",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "build": "run-s build:bundle build:types",
+    "build:bundle": "microbundle-crl --no-compress --format modern,cjs",
+    "build:types": "tsc --project tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
+    "test": "run-s test:unit test:lint typecheck test:build",
     "test:build": "run-s build",
-    "test:lint": "eslint .",
+    "test:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "jest": "jest",
-    "coverage": "jest --coverage",
+    "jest": "react-scripts test --env=jsdom",
+    "coverage": "react-scripts test --env=jsdom --coverage",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
@@ -32,11 +36,15 @@
     "react": "^18.3.1"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^5.62.0",
+    "@types/jest": "^28.1.8",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "@babel/plugin-syntax-jsx": "^7.17.12",
     "@babel/preset-react": "^7.17.12",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
-    "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
@@ -54,11 +62,14 @@
     "jest-environment-jsdom": "^28.1.1",
     "microbundle-crl": "^0.13.11",
     "npm-run-all": "^4.1.5",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.0.1",
     "prettier": "^2.0.4",
-    "prop-types": "^15.7.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5"
   },
   "files": [
     "dist"
@@ -67,6 +78,7 @@
     "react",
     "reactjs",
     "ssr",
-    "javascript"
+    "javascript",
+    "typescript"
   ]
 }
