@@ -23,7 +23,7 @@ const PageIndicator = (props) => {
           goToPage={goToPage}
           key={i}
           indicatorStyle={indicatorStyle}
-          indicatorStyleActive={active && indicatorStyleActive}
+          indicatorStyleActive={indicatorStyleActive}
         />
       )
     }
@@ -43,17 +43,17 @@ const PageIndicator = (props) => {
   return <div style={pageIndicatorStyle}>{renderIndicators()}</div>
 }
 
-PageIndicatorButton.propTypes = {
+PageIndicator.propTypes = {
   goToPage: PropTypes.func,
   pageCount: PropTypes.number,
   activePage: PropTypes.number,
   style: PropTypes.object
 }
 
-PageIndicatorButton.defaultProps = {
+PageIndicator.defaultProps = {
   goToPage: () => {},
   pageCount: 1,
-  activePage: 1,
+  activePage: 0,
   style: {}
 }
 
