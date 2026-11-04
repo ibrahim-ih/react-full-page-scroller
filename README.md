@@ -4,6 +4,10 @@
 
 [![NPM](https://img.shields.io/npm/v/react-full-page-scroller.svg)](https://www.npmjs.com/package/react-full-page-scroller) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Contributing
+
+See the [Copilot instructions](.github/copilot-instructions.md) and [contributor workflow](.github/skills/contributor-workflow/SKILL.md) for development, testing, issue and pull request, and release guidance.
+
 ## Install
 
 ```bash
