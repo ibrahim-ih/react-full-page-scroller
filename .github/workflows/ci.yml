@@ -1,0 +1,189 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [develop, master]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CI: 'true'
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      library: ${{ steps.paths.outputs.library }}
+      example: ${{ steps.paths.outputs.example }}
+      automation: ${{ steps.paths.outputs.automation }}
+    steps:
+      - name: Checkout source and comparison history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Classify changed files
+        id: paths
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_DIFF: ${{ github.event_name == 'pull_request' }}
+          FULL_CHECK: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+        run: bash .github/scripts/detect-changes.sh >> "$GITHUB_OUTPUT"
+
+  automation:
+    name: Validate automation
+    needs: changes
+    if: needs.changes.outputs.automation == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned workflow validator
+        run: go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.11
+      - name: Validate workflow syntax and expressions
+        run: '"$(go env GOPATH)/bin/actionlint" -color'
+      - name: Test change detection
+        run: bash .github/scripts/test-detect-changes.sh
+
+  validate:
+    name: Validate source
+    needs: changes
+    if: needs.changes.outputs.library == 'true' || needs.changes.outputs.example == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+      - name: Lint library and demo
+        run: npm run test:lint
+      - name: Typecheck library
+        run: npm run typecheck
+
+  test:
+    name: Test library
+    needs: changes
+    if: needs.changes.outputs.library == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+      - name: Run library tests with coverage
+        run: npm run test:unit -- --watchAll=false --runInBand --coverage
+      - name: Upload coverage even after test failure
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: library-coverage-${{ github.run_id }}-${{ github.run_attempt }}
+          path: coverage/
+          if-no-files-found: warn
+          retention-days: 7
+
+  build:
+    name: Build library and verify demo
+    needs: changes
+    if: needs.changes.outputs.example == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+      - name: Build library bundles and declarations
+        run: npm run build
+      - name: Install locked demo dependencies
+        run: npm ci --prefix example --ignore-scripts --no-audit --no-fund
+      - name: Typecheck demo
+        run: ./node_modules/.bin/tsc --project example/tsconfig.json --noEmit
+      - name: Test demo against built library
+        run: npm test --prefix example -- --watchAll=false --runInBand
+      - name: Build production demo
+        run: npm run build --prefix example
+      - name: Package library without rebuilding
+        run: |
+          mkdir -p "$RUNNER_TEMP/package"
+          npm pack --ignore-scripts --json --pack-destination "$RUNNER_TEMP/package" > "$RUNNER_TEMP/package-manifest.json"
+          node <<'NODE'
+          const fs = require('fs')
+          const pkg = require('./package.json')
+          const [archive] = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/package-manifest.json`, 'utf8'))
+          const files = new Set(archive.files.map(file => file.path))
+          for (const field of ['main', 'module', 'types']) {
+            if (!pkg[field] || !files.has(pkg[field])) {
+              throw new Error(`Package is missing its ${field} entry point: ${pkg[field]}`)
+            }
+          }
+          console.log(`Verified ${archive.filename}: CommonJS, modern bundle and declarations`)
+          NODE
+      - name: Upload installable library package
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: library-package-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/package/*.tgz
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+      - name: Upload deployable demo
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: demo-site-${{ github.run_id }}-${{ github.run_attempt }}
+          path: example/build/
+          if-no-files-found: error
+          retention-days: 7
+
+  checks:
+    name: CI checks
+    if: ${{ always() }}
+    needs: [changes, automation, validate, test, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Report and enforce required results
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          node <<'NODE'
+          const needs = JSON.parse(process.env.RESULTS)
+          const fs = require('fs')
+          const selected = {
+            changes: true,
+            automation: needs.changes.outputs.automation === 'true',
+            validate: needs.changes.outputs.example === 'true',
+            test: needs.changes.outputs.library === 'true',
+            build: needs.changes.outputs.example === 'true'
+          }
+          const rows = Object.entries(needs).map(([name, job]) => `| ${name} | ${job.result} |`)
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## CI results\n\n| Job | Result |\n| --- | --- |\n${rows.join('\n')}\n`)
+          for (const [name, required] of Object.entries(selected)) {
+            if (required && needs[name].result !== 'success') {
+              console.error(`Required job ${name}: ${needs[name].result}`)
+              process.exitCode = 1
+            }
+          }
+          NODE

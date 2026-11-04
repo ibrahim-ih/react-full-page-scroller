@@ -1,0 +1,16 @@
+name: Setup project
+description: Install the locked toolchain without the implicit prepare build.
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js and npm cache
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: '24'
+        cache: npm
+        cache-dependency-path: |
+          package-lock.json
+          example/package-lock.json
+    - name: Install locked library dependencies
+      shell: bash
+      run: npm ci --ignore-scripts --no-audit --no-fund

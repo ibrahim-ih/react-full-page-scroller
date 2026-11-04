@@ -157,6 +157,11 @@ const PageNavExample  {
 
 Install the locked development dependencies with `npm ci`.
 
+Use `feature/*` branches targeting `develop`; promote releases to `master`.
+Pull requests and integration-branch pushes run path-aware GitHub Actions checks.
+See the [CI/CD guide](docs/ci-cd.md) for the audit, required merge check,
+execution scenarios, artifact names, and the unchanged manual deployment process.
+
 ```bash
 # Run all library unit and integration tests once
 npm run test:unit -- --watchAll=false --runInBand
