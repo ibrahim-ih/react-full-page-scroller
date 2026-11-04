@@ -23,7 +23,7 @@ const PageIndicator = (props) => {
           goToPage={goToPage}
           key={i}
           indicatorStyle={indicatorStyle}
-          indicatorStyleActive={active && indicatorStyleActive}
+          indicatorStyleActive={indicatorStyleActive}
         />
       )
     }
@@ -43,7 +43,6 @@ const PageIndicator = (props) => {
   return <div style={pageIndicatorStyle}>{renderIndicators()}</div>
 }
 
-// propTypes
 PageIndicator.propTypes = {
   pageCount: PropTypes.number,
   activePage: PropTypes.number,
@@ -66,6 +65,14 @@ PageIndicator.defaultProps = {
     transition: 'width 500ms ease'
   },
   indicatorStyleActive: { width: '20px' }
-}
+      height: '8px',
+      width: '8px',
+      margin: '10px',
+      borderRadius: '4px',
+      backgroundColor: 'white',
+      transition: 'width 500ms ease'
+    },
+    indicatorStyleActive: { width: '20px' }
+  }
 
 export default PageIndicator

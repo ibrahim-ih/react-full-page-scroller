@@ -51,7 +51,7 @@ export default class PageScroller extends React.Component {
     }
 
     this.pages = 0
-    this.scrollLocker = () => {}
+    this.scrollLocker = null
   }
 
   componentDidMount = () => {
@@ -62,6 +62,7 @@ export default class PageScroller extends React.Component {
 
   componentWillUnmount = () => {
     window.removeEventListener('scroll', this.handleScroll)
+    clearTimeout(this.scrollLocker)
   }
 
   handleScroll = () => {
@@ -90,6 +91,7 @@ export default class PageScroller extends React.Component {
   }
 
   scroll = (winHeight, pageIndex) => {
+    clearTimeout(this.scrollLocker)
     window.scrollTo(0, winHeight * pageIndex)
 
     this.scrollLocker = setTimeout(() => {
