@@ -35,6 +35,15 @@
   "peerDependencies": {
     "react": "^18.3.1"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.test.{js,jsx,ts,tsx}",
+      "!src/**/*.spec.{js,jsx,ts,tsx}",
+      "!src/setupTests.ts",
+      "!src/test-utils.js"
+    ]
+  },
   "devDependencies": {
     "@typescript-eslint/parser": "^5.62.0",
     "@types/jest": "^28.1.8",

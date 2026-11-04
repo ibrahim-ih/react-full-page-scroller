@@ -153,6 +153,27 @@ const PageNavExample  {
 }
 ```
 
+## Development and testing
+
+Install the locked development dependencies with `npm ci`.
+
+```bash
+# Run all library unit and integration tests once
+npm run test:unit -- --watchAll=false --runInBand
+
+# Include coverage for every library module
+npm run test:unit -- --watchAll=false --runInBand --coverage
+
+# Run unit tests, lint and the production build
+npm test
+```
+
+Tests use the existing Jest/jsdom runner and React DOM test utilities. They cover
+child filtering, viewport styling, navigation, indicator updates, scroll direction
+and boundaries, scroll locking, lifecycle cleanup and server-side rendering.
+Scroll positions and timers are controlled in tests; no real browser scrolling or
+one-second waits are needed.
+
 ## License
 
 © [Ibrahim Haouari](https://github.com/Ibrahim-ih)

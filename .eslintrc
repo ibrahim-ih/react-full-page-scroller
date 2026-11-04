@@ -36,6 +36,16 @@
   },
   "overrides": [
     {
+      "files": ["*.js"],
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2020
+      },
+      "globals": {
+        "globalThis": "readonly"
+      }
+    },
+    {
       "files": ["*.ts", "*.tsx"],
       "rules": {
         "no-undef": 0,
