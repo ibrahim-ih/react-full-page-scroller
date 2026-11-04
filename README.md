@@ -19,13 +19,13 @@ npm install --save react-full-page-scroller
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-full-page-scroller'
+import FullPage from 'react-full-page-scroller'
 import 'react-full-page-scroller/dist/index.css'
 
 class Example extends Component {
   render() {
     return (
-      <MyComponent>
+      <FullPage>
         <div>
           <h1>1</h1>
         </div>
@@ -35,7 +35,7 @@ class Example extends Component {
         <div>
           <h1>3</h1>
         </div>
-      </MyComponent>
+      </FullPage>
     )
   }
 }
@@ -43,113 +43,52 @@ class Example extends Component {
 
 ### Props
 
-| Prop Name            | Type   |
-| -------------------- | ------ |
-| pageNav              | Object |
-| indicatorStyle       | object |
-| indicatorStyleActive | object |
+`FullPage` accepts these props:
 
-#### Page Nav Object
+| Prop | Type | Required | Description |
+| ---- | ---- | -------- | ----------- |
+| `children` | `ReactNode` | Yes | Page elements, one child element per page. |
+| `pageNav` | `Array<{ title: string, className?: string, style?: CSSProperties }>` | No | Optional navigation configuration, in the same order as the page children. An entry with a `title` displays a button; `className` defaults to `page-nav-button` and `style` defaults to an empty object. |
+| `indicatorStyle` | `CSSProperties` | No | Inline style for page indicators. Supplying this prop displays the indicators. |
+| `indicatorStyleActive` | `CSSProperties` | No | Inline style merged into the active indicator. Defaults to `{ width: '20px' }`. |
 
-You can customize every button in the nav page
-
-| Name      | Type   | Required | Description                             |
-| --------- | ------ | -------- | --------------------------------------- |
-| id        | number | Yes      | id for the object.                      |
-| title     | string | Yes      | title of the nav button.                |
-| className | string | No       | the className of the page nav button.   |
-| style     | object | No       | A custom style for the page nav button. |
-
-##### Exemple
+For example:
 
 ```jsx
-import React, { Component } from 'react'
+const pageNav = [
+  { title: 'Introduction' },
+  { title: 'Details', style: { color: 'blue' } },
+]
 
-import MyComponent from 'react-full-page-scroller'
-import 'react-full-page-scroller/dist/index.css'
-
-const PageNavExample  {
-
-    const navExample={[{
-                      id: 1,
-                      title: 'title 1',
-                      className: 'page-nav-button',
-                      style: { width: '1rem' }
-                    },
-                    {
-                      id: 2,
-                      title: 'title 2',
-                      className: 'page-nav-button',
-                      style: { width: '1rem' }
-                    },
-                    {
-                      id: 3,
-                      title: 'title 3',
-                      className: 'page-nav-button',
-                      style: { width: '1rem' }
-                    }
-                  ]};
-
-    return (
-      <MyComponent pageNav={navExample}>
-        <div>
-          <h1 className='page-number'>1</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>2</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>3</h1>
-        </div>
-      </MyComponent>
-    )
+const indicatorStyle = {
+  height: '8px',
+  width: '8px',
+  margin: '10px',
+  borderRadius: '4px',
+  backgroundColor: 'white',
 }
+
+<FullPage
+  pageNav={pageNav}
+  indicatorStyle={indicatorStyle}
+  indicatorStyleActive={{ width: '20px' }}
+>
+  <section><h1>Introduction</h1></section>
+  <section><h1>Details</h1></section>
+</FullPage>
 ```
 
-#### Indicator Style
+### React support
 
-You can add an indicator by adding the two props indicatorStyle and indicatorStyleActive
+The peer dependency supports React `>=16.8.0 <20` (React 16.8 through 19). React 16.8 is the minimum because the indicator component uses Hooks.
 
-| Name                 | Type   | Required | Description                                                    |
-| -------------------- | ------ | -------- | -------------------------------------------------------------- |
-| indicatorStyle       | object | Yes      | the indicator default style is required to show the indicator. |
-| indicatorStyleActive | object | No       | the style of the active indicator.                             |
+### Server-side rendering
 
-##### Exemple
+`FullPage` returns `null` when `window` is unavailable, so it renders no markup on the server. It is client-rendered only and should not be used where server-rendered markup or hydration is required.
 
-```jsx
-import React, { Component } from 'react'
+### Publishing
 
-import MyComponent from 'react-full-page-scroller'
-import 'react-full-page-scroller/dist/index.css'
-
-const PageNavExample  {
-
- const  indicatorStyle = {
-    height: '8px',
-    width: '8px',
-    margin: '10px',
-    borderRadius: '4px',
-    backgroundColor: 'white',
-    transition: 'width 500ms ease'
-  }
-  const indicatorStyleActive= { width: '20px' }
-
-    return (
-      <MyComponent indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
-        <div>
-          <h1 className='page-number'>1</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>2</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>3</h1>
-        </div>
-      </MyComponent>
-    )
-}
-```
+`package.json` sets `publishConfig.registry` to `https://npm.pkg.github.com/ibrahim-ih`, so `npm publish` targets GitHub Packages rather than the public npm registry. This setting controls publishing only; it does not change where `npm install` looks for packages. To publish to npmjs.com, explicitly use `npm publish --registry=https://registry.npmjs.org`.
 
 ## License
 
