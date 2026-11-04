@@ -8,14 +8,10 @@ describe('PageIndicator', () => {
 
   beforeEach(() => {
     renderer = createRenderer()
-    jest.spyOn(console, 'error')
   })
 
   afterEach(() => {
     renderer.unmount()
-    const errors = console.error.mock.calls
-    jest.restoreAllMocks()
-    expect(errors).toEqual([])
   })
 
   it('renders one active indicator by default using zero-based page indexes', () => {

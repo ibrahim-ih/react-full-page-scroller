@@ -35,6 +35,7 @@
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/**/*.test.js",
+      "!src/setupTests.js",
       "!src/test-utils.js"
     ]
   },

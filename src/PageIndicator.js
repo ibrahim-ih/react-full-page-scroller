@@ -65,14 +65,6 @@ PageIndicator.defaultProps = {
     transition: 'width 500ms ease'
   },
   indicatorStyleActive: { width: '20px' }
-      height: '8px',
-      width: '8px',
-      margin: '10px',
-      borderRadius: '4px',
-      backgroundColor: 'white',
-      transition: 'width 500ms ease'
-    },
-    indicatorStyleActive: { width: '20px' }
-  }
+}
 
 export default PageIndicator

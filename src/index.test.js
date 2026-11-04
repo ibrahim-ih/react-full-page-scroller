@@ -1,5 +1,6 @@
 import React from 'react'
-import { act, Simulate } from 'react-dom/test-utils'
+import { act } from 'react'
+import { Simulate } from 'react-dom/test-utils'
 import FullPage, { FullPage as NamedFullPage } from '.'
 import { createRenderer } from './test-utils'
 
@@ -24,7 +25,7 @@ describe('FullPage', () => {
     expect(FullPage).toBe(NamedFullPage)
   })
 
-  it('renders every page in a full viewport column without optional controls', () => {
+  it('renders every page and the default indicator in a full viewport column', () => {
     renderer.render(
       <FullPage>
         <section className='first' style={{ color: 'red' }}>
@@ -37,13 +38,16 @@ describe('FullPage', () => {
     const scroller = renderer.container.firstChild
     expect(scroller.style.display).toBe('flex')
     expect(scroller.style.flexDirection).toBe('column')
-    expect(scroller.children).toHaveLength(2)
+    expect(scroller.children).toHaveLength(3)
     expect(scroller.children[0].className).toBe('first')
     expect(scroller.children[0].style.color).toBe('red')
-    Array.from(scroller.children).forEach((page) => {
-      expect(page.style.height).toBe('100vh')
-      expect(page.style.width).toBe('100vw')
-    })
+    Array.from(scroller.children)
+      .slice(0, 2)
+      .forEach((page) => {
+        expect(page.style.height).toBe('100vh')
+        expect(page.style.width).toBe('100vw')
+      })
+    expect(scroller.children[2].children).toHaveLength(2)
     expect(scroller.textContent).toBe('FirstSecond')
     expect(scroller.querySelector('.page-nav')).toBeNull()
   })
@@ -57,14 +61,14 @@ describe('FullPage', () => {
       </FullPage>
     )
 
-    expect(renderer.container.firstChild.children).toHaveLength(1)
+    expect(renderer.container.firstChild.children).toHaveLength(2)
     expect(renderer.container.textContent).toBe('Only page')
   })
 
   it('supports no pages and an empty navigation configuration', () => {
     renderer.render(<FullPage pageNav={[]}>{[]}</FullPage>)
 
-    expect(renderer.container.firstChild.children).toHaveLength(0)
+    expect(renderer.container.firstChild.children).toHaveLength(1)
   })
 
   it('navigates using configured buttons and updates the active indicator', () => {
@@ -111,13 +115,16 @@ describe('FullPage', () => {
     expect(indicators[1].style.width).toBe('8px')
   })
 
-  it('does not show indicators when only an active style is provided', () => {
+  it('uses the default indicator style when only an active style is provided', () => {
     renderer.render(
       <FullPage indicatorStyleActive={{ width: '20px' }}>
         <div>Only page</div>
       </FullPage>
     )
 
-    expect(renderer.container.firstChild.children).toHaveLength(1)
+    expect(renderer.container.firstChild.children).toHaveLength(2)
+    expect(
+      renderer.container.firstChild.children[1].firstChild.style.width
+    ).toBe('20px')
   })
 })

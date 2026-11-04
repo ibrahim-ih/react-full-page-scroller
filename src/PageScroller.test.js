@@ -1,5 +1,6 @@
 import React from 'react'
-import { act, Simulate } from 'react-dom/test-utils'
+import { act } from 'react'
+import { Simulate } from 'react-dom/test-utils'
 import Page from './Page'
 import PageIndicator from './PageIndicator'
 import PageNav from './PageNav'
