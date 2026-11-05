@@ -69,46 +69,46 @@ You can customize every button in the nav page
 ##### Exemple
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
-import MyComponent from 'react-full-page-scroller'
+import FullPage from 'react-full-page-scroller'
 import 'react-full-page-scroller/dist/index.css'
 
-const PageNavExample  {
+const PageNavExample = () => {
+  const navExample = [
+    {
+      id: 1,
+      title: 'title 1',
+      className: 'page-nav-button',
+      style: { width: '1rem' }
+    },
+    {
+      id: 2,
+      title: 'title 2',
+      className: 'page-nav-button',
+      style: { width: '1rem' }
+    },
+    {
+      id: 3,
+      title: 'title 3',
+      className: 'page-nav-button',
+      style: { width: '1rem' }
+    }
+  ]
 
-    const navExample={[{
-                      id: 1,
-                      title: 'title 1',
-                      className: 'page-nav-button',
-                      style: { width: '1rem' }
-                    },
-                    {
-                      id: 2,
-                      title: 'title 2',
-                      className: 'page-nav-button',
-                      style: { width: '1rem' }
-                    },
-                    {
-                      id: 3,
-                      title: 'title 3',
-                      className: 'page-nav-button',
-                      style: { width: '1rem' }
-                    }
-                  ]};
-
-    return (
-      <MyComponent pageNav={navExample}>
-        <div>
-          <h1 className='page-number'>1</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>2</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>3</h1>
-        </div>
-      </MyComponent>
-    )
+  return (
+    <FullPage pageNav={navExample}>
+      <div>
+        <h1 className='page-number'>1</h1>
+      </div>
+      <div>
+        <h1 className='page-number'>2</h1>
+      </div>
+      <div>
+        <h1 className='page-number'>3</h1>
+      </div>
+    </FullPage>
+  )
 }
 ```
 
@@ -124,14 +124,13 @@ You can add an indicator by adding the two props indicatorStyle and indicatorSty
 ##### Exemple
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
-import MyComponent from 'react-full-page-scroller'
+import FullPage from 'react-full-page-scroller'
 import 'react-full-page-scroller/dist/index.css'
 
-const PageNavExample  {
-
- const  indicatorStyle = {
+const IndicatorStyleExample = () => {
+  const indicatorStyle = {
     height: '8px',
     width: '8px',
     margin: '10px',
@@ -139,21 +138,24 @@ const PageNavExample  {
     backgroundColor: 'white',
     transition: 'width 500ms ease'
   }
-  const indicatorStyleActive= { width: '20px' }
+  const indicatorStyleActive = { width: '20px' }
 
-    return (
-      <MyComponent indicatorStyle={indicatorStyle} indicatorStyleActive={indicatorStyleActive}>
-        <div>
-          <h1 className='page-number'>1</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>2</h1>
-        </div>
-        <div>
-          <h1 className='page-number'>3</h1>
-        </div>
-      </MyComponent>
-    )
+  return (
+    <FullPage
+      indicatorStyle={indicatorStyle}
+      indicatorStyleActive={indicatorStyleActive}
+    >
+      <div>
+        <h1 className='page-number'>1</h1>
+      </div>
+      <div>
+        <h1 className='page-number'>2</h1>
+      </div>
+      <div>
+        <h1 className='page-number'>3</h1>
+      </div>
+    </FullPage>
+  )
 }
 ```
 
