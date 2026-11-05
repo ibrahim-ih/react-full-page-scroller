@@ -25,11 +25,10 @@ export default class PageScroller extends React.Component<
     scrollPos: 0,
     pageIndex: 0,
     scrollAgain: true,
-    children: []
+    children: getValidChildren(this.props.children)
   }
 
   componentDidMount(): void {
-    this.setState({ children: getValidChildren(this.props.children) })
     window.addEventListener('scroll', this.handleScroll)
   }
 
