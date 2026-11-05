@@ -161,6 +161,9 @@ const IndicatorStyleExample = () => {
 
 ## Development and testing
 
+See the [modernization and dependency upgrade plan](docs/upgrade-plan.md) for
+the proposed upgrade order, compatibility constraints, and acceptance gates.
+
 Install the locked development dependencies with `npm ci`.
 
 Use `feature/*` branches targeting `develop`; promote releases to `master`.
