@@ -4,11 +4,17 @@
 
 [![NPM](https://img.shields.io/npm/v/react-full-page-scroller.svg)](https://www.npmjs.com/package/react-full-page-scroller) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Contributing
+
+See the [Copilot instructions](.github/copilot-instructions.md) and [contributor workflow](.github/skills/contributor-workflow/SKILL.md) for development, testing, issue and pull request, and release guidance.
+
 ## Install
 
 ```bash
 npm install --save react-full-page-scroller
 ```
+
+The package includes TypeScript declarations for its component props and page navigation items.
 
 ## Demo
 
@@ -43,11 +49,11 @@ class Example extends Component {
 
 ### Props
 
-| Prop Name            | Type   |
-| -------------------- | ------ |
-| pageNav              | Object |
-| indicatorStyle       | object |
-| indicatorStyleActive | object |
+| Prop Name            | Type               | Required |
+| -------------------- | ------------------ | -------- |
+| pageNav              | `PageNavItem[]`    | No       |
+| indicatorStyle       | `CSSProperties`    | No       |
+| indicatorStyleActive | `CSSProperties`    | No       |
 
 #### Page Nav Object
 
@@ -55,7 +61,7 @@ You can customize every button in the nav page
 
 | Name      | Type   | Required | Description                             |
 | --------- | ------ | -------- | --------------------------------------- |
-| id        | number | Yes      | id for the object.                      |
+| id        | number | No       | id for the object.                      |
 | title     | string | Yes      | title of the nav button.                |
 | className | string | No       | the className of the page nav button.   |
 | style     | object | No       | A custom style for the page nav button. |
@@ -150,6 +156,32 @@ const PageNavExample  {
     )
 }
 ```
+
+## Development and testing
+
+Install the locked development dependencies with `npm ci`.
+
+Use `feature/*` branches targeting `develop`; promote releases to `master`.
+Pull requests and integration-branch pushes run path-aware GitHub Actions checks.
+See the [CI/CD guide](docs/ci-cd.md) for the audit, required merge check,
+execution scenarios, artifact names, and the unchanged manual deployment process.
+
+```bash
+# Run all library unit and integration tests once
+npm run test:unit -- --watchAll=false --runInBand
+
+# Include coverage for every library module
+npm run test:unit -- --watchAll=false --runInBand --coverage
+
+# Run unit tests, lint and the production build
+npm test
+```
+
+Tests use the existing Jest/jsdom runner and React DOM test utilities. They cover
+child filtering, viewport styling, navigation, indicator updates, scroll direction
+and boundaries, scroll locking, lifecycle cleanup and server-side rendering.
+Scroll positions and timers are controlled in tests; no real browser scrolling or
+one-second waits are needed.
 
 ## License
 

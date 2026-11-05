@@ -1,17 +1,24 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "standard",
     "standard-react",
     "plugin:prettier/recommended",
+    "plugin:jest/recommended",
     "prettier/standard",
-    "prettier/react"
+    "prettier/react",
+    "prettier"
   ],
   "env": {
-    "node": true
+    "node": true,
+    "jest": true,
+    "jest/globals": true
+  },
+  "globals": {
+    "globalThis": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2020,
+    "ecmaVersion": 2021,
     "ecmaFeatures": {
       "legacyDecorators": true,
       "jsx": true
@@ -19,7 +26,7 @@
   },
   "settings": {
     "react": {
-      "version": "16"
+      "version": "detect"
     }
   },
   "rules": {
@@ -29,5 +36,22 @@
     "react/jsx-fragments": 0,
     "react/no-unused-prop-types": 0,
     "import/export": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx"],
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": 0,
+        "no-use-before-define": 0
+      }
+    }
+  ]
 }
