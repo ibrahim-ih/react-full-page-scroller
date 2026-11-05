@@ -3,27 +3,55 @@ import { renderToString } from 'react-dom/server'
 import FullPage from '.'
 
 describe('FullPage server rendering', () => {
-  it('returns no markup without accessing browser globals', () => {
-    const windowDescriptor = Object.getOwnPropertyDescriptor(
-      globalThis,
-      'window'
-    )
-    Object.defineProperty(globalThis, 'window', {
-      configurable: true,
-      value: undefined
-    })
+  it.each([false, true])(
+    'renders page content without browser globals (navigation: %s)',
+    (withNavigation) => {
+      const descriptors = ['window', 'document'].map((name) => [
+        name,
+        Object.getOwnPropertyDescriptor(globalThis, name)
+      ])
+      descriptors.forEach(([name]) => {
+        Object.defineProperty(globalThis, name, {
+          configurable: true,
+          get() {
+            throw new Error(`Server rendering accessed ${name}`)
+          }
+        })
+      })
 
-    try {
-      expect(typeof window).toBe('undefined')
-      expect(
-        renderToString(
-          <FullPage>
-            <div>Page</div>
+      try {
+        const markup = renderToString(
+          <FullPage
+            pageNav={
+              withNavigation ? [{ title: 'Start' }, { title: 'End' }] : []
+            }
+          >
+            {null}
+            {false}
+            <section className='first'>
+              <h1>First page</h1>
+            </section>
+            <section>Second page</section>
           </FullPage>
         )
-      ).toBe('')
-    } finally {
-      Object.defineProperty(globalThis, 'window', windowDescriptor)
+
+        expect(markup).toContain('<h1>First page</h1>')
+        expect(markup).toContain('Second page')
+        expect(markup).toContain('height:100vh;width:100vw')
+        expect(markup.includes('page-nav')).toBe(withNavigation)
+        expect(markup.includes('Start')).toBe(withNavigation)
+        expect(markup.includes('End')).toBe(withNavigation)
+      } finally {
+        descriptors.forEach(([name, descriptor]) => {
+          Object.defineProperty(globalThis, name, descriptor)
+        })
+      }
     }
+  )
+
+  it('renders an empty scroller when no pages are provided', () => {
+    expect(renderToString(<FullPage />)).toBe(
+      '<div style="display:flex;flex-direction:column"><div style="height:100vh;position:fixed;display:flex;flex-direction:column;justify-content:center"></div></div>'
+    )
   })
 })
