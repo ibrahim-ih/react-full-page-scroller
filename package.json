@@ -12,8 +12,17 @@
   "module": "dist/index.modern.js",
   "types": "dist/types/index.d.ts",
   "source": "src/index.tsx",
-  "engines": {
-    "node": ">=10"
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.22.2",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "11.21.2",
+      "onFail": "error"
+    }
   },
   "scripts": {
     "build": "run-s build:bundle build:types",

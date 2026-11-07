@@ -92,8 +92,11 @@ release flow; merging into `develop` does not change the default branch.
 
 ## Installation, caching, and versions
 
-- CI uses Node 24 (bundled npm 11) on GitHub-hosted Ubuntu. This is a validated CI toolchain, not
-  a change to the package's advertised Node engine range.
+- Local development and CI use Node 24.22.2 and npm 11.21.2. `.nvmrc` and
+  `devEngines` pin and check the local versions; CI installs the same npm version
+  after selecting the exact Node patch. These are development requirements, not
+  consumer support declarations. The package does not currently declare a Node
+  engine range for consumers.
 - `npm ci --ignore-scripts --no-audit --no-fund` respects each checked-in lockfile.
   Skipping lifecycle scripts prevents the root `prepare` build and demo-linked
   package preparation from silently rebuilding. Both clean installs and all

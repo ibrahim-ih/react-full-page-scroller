@@ -161,6 +161,12 @@ const IndicatorStyleExample = () => {
 See the [modernization and dependency upgrade plan](docs/upgrade-plan.md) for
 the proposed upgrade order, compatibility constraints, and acceptance gates.
 
+Development requires Node.js 24.22.2 and npm 11.21.2. Use the checked-in
+`.nvmrc` to select Node.js; npm checks both versions through `devEngines`.
+These development requirements do not define the Node.js support of the
+published browser library. The package does not currently declare a consumer
+Node.js engine range.
+
 Install the locked development dependencies with `npm ci`.
 
 Use `feature/*` branches targeting `develop`; promote releases to `master`.
