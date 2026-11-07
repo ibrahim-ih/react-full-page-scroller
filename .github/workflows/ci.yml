@@ -105,7 +105,7 @@ jobs:
   build:
     name: Build library and verify demo
     needs: changes
-    if: needs.changes.outputs.example == 'true'
+    if: needs.changes.outputs.library == 'true' || needs.changes.outputs.example == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -128,19 +128,9 @@ jobs:
       - name: Package library without rebuilding
         run: |
           mkdir -p "$RUNNER_TEMP/package"
-          npm pack --ignore-scripts --json --pack-destination "$RUNNER_TEMP/package" > "$RUNNER_TEMP/package-manifest.json"
-          node <<'NODE'
-          const fs = require('fs')
-          const pkg = require('./package.json')
-          const [archive] = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/package-manifest.json`, 'utf8'))
-          const files = new Set(archive.files.map(file => file.path))
-          for (const field of ['main', 'module', 'types']) {
-            if (!pkg[field] || !files.has(pkg[field])) {
-              throw new Error(`Package is missing its ${field} entry point: ${pkg[field]}`)
-            }
-          }
-          console.log(`Verified ${archive.filename}: CommonJS, modern bundle and declarations`)
-          NODE
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/package"
+          archive="$(node -e "const pkg = require('./package.json'); process.stdout.write(pkg.name.replace('/', '-') + '-' + pkg.version + '.tgz')")"
+          node .github/scripts/test-package-consumers.js "$RUNNER_TEMP/package/$archive"
       - name: Upload installable library package
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -176,7 +166,7 @@ jobs:
             automation: needs.changes.outputs.automation === 'true',
             validate: needs.changes.outputs.example === 'true',
             test: needs.changes.outputs.library === 'true',
-            build: needs.changes.outputs.example === 'true'
+            build: needs.changes.outputs.library === 'true' || needs.changes.outputs.example === 'true'
           }
           const rows = Object.entries(needs).map(([name, job]) => `| ${name} | ${job.result} |`)
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## CI results\n\n| Job | Result |\n| --- | --- |\n${rows.join('\n')}\n`)

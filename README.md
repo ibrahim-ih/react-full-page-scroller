@@ -26,7 +26,6 @@ The package includes TypeScript declarations for its component props and page na
 import React, { Component } from 'react'
 
 import MyComponent from 'react-full-page-scroller'
-import 'react-full-page-scroller/dist/index.css'
 
 class Example extends Component {
   render() {
@@ -72,7 +71,6 @@ You can customize every button in the nav page
 import React from 'react'
 
 import FullPage from 'react-full-page-scroller'
-import 'react-full-page-scroller/dist/index.css'
 
 const PageNavExample = () => {
   const navExample = [
@@ -127,7 +125,6 @@ You can add an indicator by adding the two props indicatorStyle and indicatorSty
 import React from 'react'
 
 import FullPage from 'react-full-page-scroller'
-import 'react-full-page-scroller/dist/index.css'
 
 const IndicatorStyleExample = () => {
   const indicatorStyle = {

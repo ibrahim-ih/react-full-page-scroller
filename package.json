@@ -82,7 +82,9 @@
     "typescript": "^4.9.5"
   },
   "files": [
-    "dist"
+    "dist/index.js",
+    "dist/index.modern.js",
+    "dist/types"
   ],
   "keywords": [
     "react",

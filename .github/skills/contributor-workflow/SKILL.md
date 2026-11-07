@@ -12,11 +12,11 @@ Run commands from the repository root:
 - `npm test` runs the unit tests, ESLint, and the package build.
 - For a focused check, use `npm run test:unit`, `npm run test:lint`, or `npm run test:build`.
 
-There is no TypeScript compiler or typecheck script configured in this repository. Do not report a typecheck as passing; mention it as unavailable when relevant.
+The project uses TypeScript and `npm test` runs the configured typecheck. Report typecheck results when relevant.
 
 ## Code and test conventions
 
-The current source is JavaScript and uses React class components. Preserve that architecture and the surrounding style; if a change introduces TypeScript, use typed class components rather than converting components to function components.
+The current source is TypeScript and includes React class components. Preserve the existing component architecture and style; do not convert class components to function components.
 
 Put new tests under `src/__tests__/`. The existing `src/index.test.js` is a legacy test location and should not be moved for unrelated changes.
 
