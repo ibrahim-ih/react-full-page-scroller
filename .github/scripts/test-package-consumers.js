@@ -8,6 +8,12 @@ const root = path.resolve(__dirname, '../..')
 const archive = path.resolve(process.argv[2] || '')
 const pkg = require(path.join(root, 'package.json'))
 const lock = require(path.join(root, 'package-lock.json'))
+const [
+  reactVersion,
+  reactDomVersion,
+  reactTypesVersion,
+  reactDomTypesVersion
+] = process.argv.slice(3)
 
 if (!process.argv[2] || !fs.existsSync(archive)) {
   throw new Error('Pass the packed package archive as the first argument')
@@ -45,8 +51,11 @@ try {
     '--no-audit',
     '--no-fund',
     archive,
-    `react@${packageVersion('react')}`,
-    `@types/react@${packageVersion('@types/react')}`,
+    `react@${reactVersion || packageVersion('react')}`,
+    `react-dom@${reactDomVersion || packageVersion('react-dom')}`,
+    `@types/react@${reactTypesVersion || packageVersion('@types/react')}`,
+    `@types/react-dom@${reactDomTypesVersion || packageVersion('@types/react-dom')}`,
+    `jsdom@${packageVersion('jsdom')}`,
     `typescript@${packageVersion('typescript')}`
   ], { cwd: root, stdio: 'inherit' })
 
@@ -55,8 +64,53 @@ try {
     const assert = require('assert')
     const React = require('react')
     const library = require('react-full-page-scroller')
+    const { renderToString } = require('react-dom/server')
+    const app = React.createElement(
+      library.default,
+      null,
+      React.createElement('div', null, 'Hydrated consumer')
+    )
     assert.strictEqual(library.default, library.FullPage)
     assert(React.isValidElement(React.createElement(library.default)))
+    assert.strictEqual(
+      renderToString(app),
+      '<div style="display:flex;flex-direction:column"></div>'
+    )
+
+    const { JSDOM } = require('jsdom')
+    const dom = new JSDOM('<div id="root"></div>', { url: 'http://localhost' })
+    globalThis.window = dom.window
+    globalThis.document = dom.window.document
+    Object.defineProperty(globalThis, 'navigator', {
+      configurable: true,
+      value: dom.window.navigator
+    })
+    globalThis.IS_REACT_ACT_ENVIRONMENT = true
+
+    const { hydrateRoot } = require('react-dom/client')
+    const container = document.getElementById('root')
+    container.innerHTML = renderToString(app)
+    const errors = []
+    let root
+
+    ;(async () => {
+      await React.act(async () => {
+        root = hydrateRoot(
+          container,
+          app,
+          { onRecoverableError: (error) => errors.push(error) }
+        )
+      })
+      assert.strictEqual(container.textContent, 'Hydrated consumer')
+      assert.deepStrictEqual(errors, [])
+      await React.act(async () => {
+        root.unmount()
+      })
+      dom.window.close()
+    })().catch((error) => {
+      console.error(error)
+      process.exitCode = 1
+    })
   `)
   execFileSync(process.execPath, [cjsConsumer], { cwd: consumer, stdio: 'inherit' })
 
@@ -93,7 +147,6 @@ try {
     '--jsx',
     'react',
     '--esModuleInterop',
-    '--skipLibCheck',
     '--moduleResolution',
     'node',
     '--module',

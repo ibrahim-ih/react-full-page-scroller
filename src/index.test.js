@@ -1,5 +1,5 @@
 import React, { act } from 'react'
-import { Simulate } from 'react-dom/test-utils'
+import { fireEvent } from '@testing-library/react'
 import FullPage, { FullPage as NamedFullPage } from '.'
 import { createRenderer } from './test-utils'
 
@@ -97,7 +97,7 @@ describe('FullPage', () => {
     expect(scroller.querySelector('.last-page').style.color).toBe('blue')
 
     act(() => {
-      Simulate.click(scroller.querySelector('.last-page'))
+      fireEvent.click(scroller.querySelector('.last-page'))
     })
 
     expect(window.scrollTo).toHaveBeenLastCalledWith(0, window.innerHeight)
@@ -106,7 +106,7 @@ describe('FullPage', () => {
 
     act(() => {
       jest.advanceTimersByTime(1000)
-      Simulate.click(indicators[0])
+      fireEvent.click(indicators[0])
     })
 
     expect(window.scrollTo).toHaveBeenLastCalledWith(0, 0)

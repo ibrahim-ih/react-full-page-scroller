@@ -26,10 +26,6 @@ export const FullPage = ({
   },
   indicatorStyleActive = { backgroundColor: '#fff' }
 }: FullPageProps): React.ReactElement | null => {
-  if (typeof window === 'undefined') {
-    return null
-  }
-
   const pageNav = pageNavProp ?? []
 
   return (
