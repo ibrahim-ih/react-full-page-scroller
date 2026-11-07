@@ -16,7 +16,7 @@ describe('Page', () => {
     expect(container.firstElementChild).toHaveStyle({
       height: '100vh',
       width: '100vw',
-      color: 'red'
+      color: 'rgb(255, 0, 0)'
     })
     expect(screen.getByRole('heading', { name: 'Page content' })).toBeVisible()
   })

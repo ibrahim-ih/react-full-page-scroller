@@ -1,5 +1,6 @@
-This example was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This example uses Vite and the library package in the parent directory.
 
-It is linked to the react-full-page-scroller package in the parent directory for development purposes.
-
-You can run `npm install` and then `npm start` to test your package.
+From the repository root, run `npm ci --ignore-scripts`, `npm run build`, and
+`npm ci --prefix example --ignore-scripts`. Then use `npm start --prefix example`
+to start the demo or `npm run build --prefix example` to create its production
+build.
