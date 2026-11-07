@@ -1,8 +1,11 @@
 import React from 'react'
 import { FullPage as MyComponent } from 'react-full-page-scroller'
 import { dark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript'
 import logo from './1200px-React-icon.svg.png'
+
+SyntaxHighlighter.registerLanguage('javascript', javascript)
 
 const App = (): React.ReactElement => {
   const nav = [

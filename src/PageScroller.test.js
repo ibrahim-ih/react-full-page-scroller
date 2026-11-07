@@ -1,5 +1,5 @@
 import React, { act } from 'react'
-import { Simulate } from 'react-dom/test-utils'
+import { fireEvent } from '@testing-library/react'
 import Page from './Page'
 import PageIndicator from './PageIndicator'
 import PageNav from './PageNav'
@@ -229,7 +229,7 @@ describe('PageScroller', () => {
     expect(buttons[1].style.color).toBe('red')
 
     act(() => {
-      Simulate.click(buttons[0])
+      fireEvent.click(buttons[0])
     })
     expect(scroller.state.pageIndex).toBe(1)
     expect(window.scrollTo).toHaveBeenLastCalledWith(0, 600)
@@ -256,7 +256,7 @@ describe('PageScroller', () => {
     expect(indicators[0].style.width).toBe('20px')
 
     act(() => {
-      Simulate.click(indicators[1])
+      fireEvent.click(indicators[1])
     })
     expect(scroller.state.pageIndex).toBe(1)
     expect(window.scrollTo).toHaveBeenLastCalledWith(0, 600)

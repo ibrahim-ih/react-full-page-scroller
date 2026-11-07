@@ -1,5 +1,5 @@
 import React from 'react'
-import { Simulate } from 'react-dom/test-utils'
+import { fireEvent } from '@testing-library/react'
 import PageIndicator from './PageIndicator'
 import { createRenderer } from './test-utils'
 
@@ -25,7 +25,7 @@ describe('PageIndicator', () => {
     renderer.render(<PageIndicator />)
 
     expect(() =>
-      Simulate.click(renderer.container.firstChild.firstChild)
+      fireEvent.click(renderer.container.firstChild.firstChild)
     ).not.toThrow()
   })
 
@@ -75,7 +75,7 @@ describe('PageIndicator', () => {
     renderer.render(<PageIndicator pageCount={3} goToPage={goToPage} />)
 
     Array.from(renderer.container.firstChild.children).forEach((button) => {
-      Simulate.click(button)
+      fireEvent.click(button)
     })
 
     expect(goToPage.mock.calls).toEqual([[0], [1], [2]])

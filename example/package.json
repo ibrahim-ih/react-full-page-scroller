@@ -22,14 +22,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^18.3.1 || ^19.0.0",
+    "react-dom": "^18.3.1 || ^19.0.0",
     "react-full-page-scroller": "file:..",
-    "react-syntax-highlighter": "^15.4.4"
+    "react-syntax-highlighter": "^16.1.2"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^18.3.12 || ^19.0.0",
+    "@types/react-dom": "^18.3.1 || ^19.0.0",
     "@types/node": "^20.19.43",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^6.2.1",

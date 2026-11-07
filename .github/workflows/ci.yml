@@ -91,9 +91,11 @@ jobs:
           persist-credentials: false
       - name: Setup project
         uses: ./.github/actions/setup-project
+      - name: Verify React 19 dependency tree
+        run: npm ls
       - name: Run library tests with coverage
         run: npm run test:unit -- --watchAll=false --runInBand --coverage
-      - name: Upload coverage even after test failure
+      - name: Upload React 19 coverage even after test failure
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -101,6 +103,11 @@ jobs:
           path: coverage/
           if-no-files-found: warn
           retention-days: 7
+      - name: Test library with React 18
+        run: |
+          npm install --no-save --package-lock=false --ignore-scripts --no-audit --no-fund react@18.3.1 react-dom@18.3.1 @types/react@18.3.31 @types/react-dom@18.3.7
+          npm ls
+          npm test
 
   build:
     name: Build library, verify demo and run e2e
@@ -119,6 +126,8 @@ jobs:
         run: npm run build
       - name: Install locked demo dependencies
         run: npm ci --prefix example --ignore-scripts --no-audit --no-fund
+      - name: Verify React 19 demo dependency tree
+        run: npm ls --prefix example
       - name: Typecheck demo
         run: npm run typecheck --prefix example
       - name: Test demo against built library
@@ -129,6 +138,20 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run end-to-end tests against production demo
         run: npm run test:e2e
+      - name: Upload React 19 demo
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: demo-site-${{ github.run_id }}-${{ github.run_attempt }}
+          path: example/build/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Test demo with React 18
+        run: |
+          npm install --prefix example --no-save --package-lock=false --ignore-scripts --no-audit --no-fund react@18.3.1 react-dom@18.3.1 @types/react@18.3.31 @types/react-dom@18.3.7
+          npm ls --prefix example
+          npm run typecheck --prefix example
+          npm test --prefix example -- --runInBand
+          npm run build --prefix example
       - name: Upload end-to-end report even after failure
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -145,6 +168,7 @@ jobs:
           npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/package"
           archive="$(node -e "const pkg = require('./package.json'); process.stdout.write(pkg.name.replace('/', '-') + '-' + pkg.version + '.tgz')")"
           node .github/scripts/test-package-consumers.js "$RUNNER_TEMP/package/$archive"
+          node .github/scripts/test-package-consumers.js "$RUNNER_TEMP/package/$archive" 18.3.1 18.3.1 18.3.31 18.3.7
       - name: Upload installable library package
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -153,13 +177,6 @@ jobs:
           if-no-files-found: error
           retention-days: 7
           compression-level: 0
-      - name: Upload deployable demo
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: demo-site-${{ github.run_id }}-${{ github.run_attempt }}
-          path: example/build/
-          if-no-files-found: error
-          retention-days: 7
 
   checks:
     name: CI checks
