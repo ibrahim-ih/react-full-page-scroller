@@ -25,3 +25,5 @@ yarn-error.log*
 #IDE
 #WebStorm
 .idea/
+test-results/
+playwright-report/

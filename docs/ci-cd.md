@@ -37,7 +37,8 @@ Detect changes
   +-- Test library: Jest and coverage
   +-- Build library and verify demo:
       library build -> locked demo install -> demo typecheck -> demo test
-      -> demo build -> verify/package library -> upload artifacts
+      -> demo build -> Playwright e2e on the built demo
+      -> verify/package library -> upload artifacts
 All selected jobs -> CI checks (stable required merge gate)
 ```
 
@@ -54,6 +55,28 @@ read-only CI. CI never publishes a package, pushes `gh-pages`, or changes Pages
 settings. This preserves current production behavior rather than introducing an
 unapproved release policy. A published GitHub release verifies the tagged source
 and produces artifacts; it does not publish to a registry.
+
+## End-to-end tests
+
+`e2e/demo.spec.ts` drives the production demo (`example/build`, served by
+`e2e/serve-demo.js`) in a real Chromium browser with Playwright. It covers page
+layout, nav buttons, mouse-wheel paging in both directions, first/last page
+boundaries, the one-second scroll lock, and absence of console errors. The
+config (`playwright.config.ts`) fixes browser, 1280x720 viewport, a single
+worker, no retries and a local static server, so humans, agents and CI get the
+same result. The CI `build` job runs it after the demo build and uploads
+`e2e-report-<run_id>-<run_attempt>` (HTML report, traces, failure screenshots).
+
+```bash
+npm ci
+npx playwright install chromium   # once
+npm run e2e:build                 # library + demo production build
+npm run test:e2e                  # headless; test:e2e:headed to watch
+```
+
+If the browser download is unavailable, use an installed Chrome with
+`E2E_BROWSER_CHANNEL=chrome npm run test:e2e`. e2e is not part of `npm test`
+because it needs a browser; run it for any change to library or demo behavior.
 
 ## Triggers and expected scenarios
 
