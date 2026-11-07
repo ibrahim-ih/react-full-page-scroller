@@ -11,9 +11,9 @@ Before this change:
 
 - No checked-in GitHub Actions workflows or stable required CI check existed.
   The only CI file was `.travis.yml`, targeting end-of-life Node 10 and 12.
-- The library uses npm, Create React App's Jest runner, ESLint, TypeScript, and
-  microbundle. The demo has its own lockfile and links the library and React
-  toolchain from the parent directory; it is not an independent npm workspace.
+- The library used npm, Create React App's Jest runner, ESLint, TypeScript, and
+  microbundle. The demo had its own lockfile and linked the library and React
+  toolchain from the parent directory; it was not an independent npm workspace.
 - `npm ci` runs the root `prepare` build. Running `npm test` afterwards builds
   again. Repeating that approach in parallel jobs would also build during lint
   and test installation.
@@ -28,6 +28,13 @@ Before this change:
 
 ## Architecture
 
+The library uses Vite library mode for `dist/index.js` and
+`dist/index.modern.js`, with `tsc` emitting declarations. The demo uses Vite
+with React deduplication and installs a packed local `file:..` library copy;
+its `install-links` setting keeps the library's development dependencies out of
+the demo tree. The library keeps Vite's widely available browser baseline, and
+the demo derives its JavaScript and CSS targets from its existing browserslist.
+
 One workflow, `.github/workflows/ci.yml`, owns validation and distributable output:
 
 ```text
@@ -36,19 +43,19 @@ Detect changes
   +-- Validate source: ESLint and library typecheck
   +-- Test library: Jest and coverage
   +-- Build library and verify demo:
-      library build -> locked demo install -> demo typecheck -> demo test
+      library build -> locked demo install -> demo typecheck -> demo Jest project
       -> demo build -> Playwright e2e on the built demo
       -> verify/package library -> upload artifacts
 All selected jobs -> CI checks (stable required merge gate)
 ```
 
 Independent jobs run in parallel. Demo verification stays with the build job
-because `file:..` imports the built library, and its dependencies reference the
-root toolchain. Splitting each short demo step into a separate job would require
-more cold installs and artifact transfers. There is one library build, not a
-build in every job or another build during packaging. A small composite action
-shares the Node/cache/install setup; a reusable workflow or large matrix would
-add little value to this single-package repository.
+because `file:..` consumes the library build output and its Jest project uses
+the root Jest configuration. Splitting each short demo step into a separate job
+would require more cold installs and artifact transfers. There is one library
+build, not a build in every job or another build during packaging. A small
+composite action shares the Node/cache/install setup; a reusable workflow or
+large matrix would add little value to this single-package repository.
 
 Deployment and package publishing remain explicit maintainer operations, outside
 read-only CI. CI never publishes a package, pushes `gh-pages`, or changes Pages

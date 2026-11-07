@@ -120,7 +120,7 @@ jobs:
       - name: Install locked demo dependencies
         run: npm ci --prefix example --ignore-scripts --no-audit --no-fund
       - name: Typecheck demo
-        run: ./node_modules/.bin/tsc --project example/tsconfig.json --noEmit
+        run: npm run typecheck --prefix example
       - name: Test demo against built library
         run: npm test --prefix example -- --watchAll=false --runInBand
       - name: Build production demo
