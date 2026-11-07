@@ -185,6 +185,17 @@ npm run test:unit -- --watchAll=false --runInBand --coverage
 npm test
 ```
 
+End-to-end tests (Playwright, real Chromium against the built demo) live in
+`e2e/`. Run `npx playwright install chromium` once, then:
+
+```bash
+npm run e2e:build   # build library and demo
+npm run test:e2e    # run e2e (CI runs the same command)
+```
+
+See the [CI/CD guide](docs/ci-cd.md#end-to-end-tests) for details. Agents and
+humans should run these after any behavior change.
+
 Tests use the existing Jest/jsdom runner and React DOM test utilities. They cover
 child filtering, viewport styling, navigation, indicator updates, scroll direction
 and boundaries, scroll locking, lifecycle cleanup and server-side rendering.

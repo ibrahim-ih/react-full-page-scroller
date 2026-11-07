@@ -103,7 +103,7 @@ jobs:
           retention-days: 7
 
   build:
-    name: Build library and verify demo
+    name: Build library, verify demo and run e2e
     needs: changes
     if: needs.changes.outputs.library == 'true' || needs.changes.outputs.example == 'true'
     runs-on: ubuntu-latest
@@ -125,6 +125,20 @@ jobs:
         run: npm test --prefix example -- --watchAll=false --runInBand
       - name: Build production demo
         run: npm run build --prefix example
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: Run end-to-end tests against production demo
+        run: npm run test:e2e
+      - name: Upload end-to-end report even after failure
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: e2e-report-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Package library without rebuilding
         run: |
           mkdir -p "$RUNNER_TEMP/package"

@@ -39,6 +39,13 @@
   },
   "overrides": [
     {
+      "files": ["e2e/**/*.ts"],
+      "rules": {
+        "jest/no-standalone-expect": 0,
+        "jest/expect-expect": 0
+      }
+    },
+    {
       "files": ["*.js", "*.jsx"],
       "parser": "espree",
       "parserOptions": {
