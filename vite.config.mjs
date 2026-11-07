@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.tsx',
       formats: ['es', 'cjs'],
-      fileName: (format) => format === 'es' ? 'index.modern.js' : 'index.js'
+      fileName: (format) => (format === 'es' ? 'index.modern.js' : 'index.js')
     },
     rollupOptions: {
       external: (id) => /^(react|react-dom)(\/|$)/.test(id),
