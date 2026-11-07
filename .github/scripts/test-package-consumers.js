@@ -95,9 +95,9 @@ try {
     '--esModuleInterop',
     '--skipLibCheck',
     '--moduleResolution',
-    'node',
+    'bundler',
     '--module',
-    'commonjs',
+    'esnext',
     typesConsumer
   ], { cwd: consumer, stdio: 'inherit' })
 
