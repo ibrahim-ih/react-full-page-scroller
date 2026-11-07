@@ -87,20 +87,20 @@ because it needs a browser; run it for any change to library or demo behavior.
 
 ## Triggers and expected scenarios
 
-| Event or change | Expected execution |
-| --- | --- |
-| Any opened/reopened/synchronized PR, including forks and release/hotfix PRs | Detect changes, run relevant jobs, always report `CI checks`; no secrets or deployment |
-| Library source, tests, root dependency or configuration changes | Source validation, library tests, library build, demo verification, package and demo artifacts |
-| Only `example/**` changes | Source validation and library/demo build verification; skip unrelated library unit tests |
-| Only Markdown, `docs/**`, or license changes | Detection and successful `CI checks` only; no dependency install |
-| Anything under `.github/**` changes | All jobs, including workflow lint and change-detector regression tests |
-| Merge or direct push to `develop` or `master` | Check the complete before/after push diff; run relevant jobs against the resulting integration commit |
-| Push to a feature, release, or hotfix branch | No duplicate push run; its open PR gets checked instead |
-| New integration branch with an all-zero previous SHA | Full verification rather than an invalid comparison |
-| Published GitHub release | Full verification of the tag, including automation and package entry points; no deployment |
-| Manual Actions dispatch | Full verification of the selected ref, without publishing |
-| New commits on an open PR | Cancel outdated runs for that PR |
-| Overlapping integration/release runs | Do not cancel them; preserve post-merge and release evidence |
+| Event or change                                                             | Expected execution                                                                                    |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Any opened/reopened/synchronized PR, including forks and release/hotfix PRs | Detect changes, run relevant jobs, always report `CI checks`; no secrets or deployment                |
+| Library source, tests, root dependency or configuration changes             | Source validation, library tests, library build, demo verification, package and demo artifacts        |
+| Only `example/**` changes                                                   | Source validation and library/demo build verification; skip unrelated library unit tests              |
+| Only Markdown, `docs/**`, or license changes                                | Detection and successful `CI checks` only; no dependency install                                      |
+| Anything under `.github/**` changes                                         | All jobs, including workflow lint and change-detector regression tests                                |
+| Merge or direct push to `develop` or `master`                               | Check the complete before/after push diff; run relevant jobs against the resulting integration commit |
+| Push to a feature, release, or hotfix branch                                | No duplicate push run; its open PR gets checked instead                                               |
+| New integration branch with an all-zero previous SHA                        | Full verification rather than an invalid comparison                                                   |
+| Published GitHub release                                                    | Full verification of the tag, including automation and package entry points; no deployment            |
+| Manual Actions dispatch                                                     | Full verification of the selected ref, without publishing                                             |
+| New commits on an open PR                                                   | Cancel outdated runs for that PR                                                                      |
+| Overlapping integration/release runs                                        | Do not cancel them; preserve post-merge and release evidence                                          |
 
 PR comparison uses the merge base of the base/head commits, not the last commit
 or a two-dot comparison that includes unrelated base-branch changes. Push
@@ -169,19 +169,19 @@ before enabling the required check for queued merges.
 
 ## Naming conventions
 
-| Surface | Convention |
-| --- | --- |
-| Branches | `feature/<kebab-case-topic>` from/to `develop`; `fix/<topic>` for normal fixes into `develop` |
-| Release branches | Preserve `release/<version>`; promote tested releases to `master` and back-merge to `develop` |
-| Production hotfixes | `hotfix/<topic>` from `master`, reviewed into `master`, then back-merged to `develop` |
-| Workflow files | Lowercase kebab-case `.yml`; keep `ci.yml` for the single validation pipeline |
-| Workflow/job/step names | Short descriptive names; stable job ID `checks` and display name `CI checks` |
-| Composite actions | `.github/actions/<kebab-case-purpose>/action.yml` |
-| Environment variables | Uppercase snake case, e.g. `CI`, `BASE_SHA`, `HEAD_SHA`, `FULL_CHECK` |
-| Future secrets | Uppercase purpose-specific names; environment-scoped where possible; never reuse an all-purpose PAT |
-| Artifacts | `<purpose>-<run_id>-<run_attempt>` to distinguish runs and reruns |
-| Build outputs | Preserve `dist/` and `example/build/`; do not commit generated output to source branches |
-| Release tags | Preserve the existing bare semantic version style; do not silently introduce a `v` prefix |
+| Surface                 | Convention                                                                                          |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| Branches                | `feature/<kebab-case-topic>` from/to `develop`; `fix/<topic>` for normal fixes into `develop`       |
+| Release branches        | Preserve `release/<version>`; promote tested releases to `master` and back-merge to `develop`       |
+| Production hotfixes     | `hotfix/<topic>` from `master`, reviewed into `master`, then back-merged to `develop`               |
+| Workflow files          | Lowercase kebab-case `.yml`; keep `ci.yml` for the single validation pipeline                       |
+| Workflow/job/step names | Short descriptive names; stable job ID `checks` and display name `CI checks`                        |
+| Composite actions       | `.github/actions/<kebab-case-purpose>/action.yml`                                                   |
+| Environment variables   | Uppercase snake case, e.g. `CI`, `BASE_SHA`, `HEAD_SHA`, `FULL_CHECK`                               |
+| Future secrets          | Uppercase purpose-specific names; environment-scoped where possible; never reuse an all-purpose PAT |
+| Artifacts               | `<purpose>-<run_id>-<run_attempt>` to distinguish runs and reruns                                   |
+| Build outputs           | Preserve `dist/` and `example/build/`; do not commit generated output to source branches            |
+| Release tags            | Preserve the existing bare semantic version style; do not silently introduce a `v` prefix           |
 
 Artifacts expire after seven days:
 `library-coverage-<run_id>-<run_attempt>`, `library-package-<run_id>-<run_attempt>`,
