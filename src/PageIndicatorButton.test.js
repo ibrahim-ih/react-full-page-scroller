@@ -1,5 +1,5 @@
 import React from 'react'
-import { Simulate } from 'react-dom/test-utils'
+import { fireEvent } from '@testing-library/react'
 import PageIndicatorButton from './PageIndicatorButton'
 import { createRenderer } from './test-utils'
 
@@ -96,7 +96,7 @@ describe('PageIndicatorButton', () => {
         <PageIndicatorButton pageIndex={pageIndex} goToPage={goToPage} />
       )
 
-      Simulate.click(renderer.container.firstChild)
+      fireEvent.click(renderer.container.firstChild)
 
       expect(goToPage).toHaveBeenCalledTimes(1)
       expect(goToPage).toHaveBeenCalledWith(pageIndex)

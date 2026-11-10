@@ -1,5 +1,5 @@
 import React from 'react'
-import { Simulate } from 'react-dom/test-utils'
+import { fireEvent } from '@testing-library/react'
 import PageNav from './PageNav'
 import { createRenderer } from './test-utils'
 
@@ -55,7 +55,7 @@ describe('PageNav', () => {
       />
     )
 
-    Simulate.click(renderer.container.querySelector('.page-nav-button'))
+    fireEvent.click(renderer.container.querySelector('.page-nav-button'))
 
     expect(goToPage).toHaveBeenCalledTimes(1)
     expect(goToPage).toHaveBeenCalledWith(4)
@@ -65,7 +65,7 @@ describe('PageNav', () => {
     renderer.render(<PageNav navButtons={[{ index: 0, title: 'First' }]} />)
 
     expect(() =>
-      Simulate.click(renderer.container.querySelector('.page-nav-button'))
+      fireEvent.click(renderer.container.querySelector('.page-nav-button'))
     ).not.toThrow()
   })
 })

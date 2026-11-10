@@ -15,6 +15,7 @@ npm install --save react-full-page-scroller
 ```
 
 The package includes TypeScript declarations for its component props and page navigation items.
+React 18.3.1 and React 19 are supported.
 
 ## Demo
 

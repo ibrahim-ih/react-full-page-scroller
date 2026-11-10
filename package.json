@@ -46,7 +46,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^18.3.1"
+    "react": "^18.3.1 || ^19.0.0"
   },
   "overrides": {
     "babel-preset-current-node-syntax": "npm:babel-preset-current-node-syntax-compat@^1.0.0"
@@ -63,8 +63,8 @@
     "@testing-library/react": "^16.3.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.43",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^18.3.12 || ^19.0.0",
+    "@types/react-dom": "^18.3.1 || ^19.0.0",
     "@vitejs/plugin-react": "^6.2.1",
     "babel-jest": "^30.5.2",
     "eslint": "^9.39.5",
@@ -79,8 +79,8 @@
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
     "prettier": "^3.9.10",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^18.3.1 || ^19.0.0",
+    "react-dom": "^18.3.1 || ^19.0.0",
     "ts-declaration-location": "^1.0.7",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.1",
