@@ -75,6 +75,8 @@ jobs:
         uses: ./.github/actions/setup-project
       - name: Lint library and demo
         run: npm run test:lint
+      - name: Check formatting
+        run: npm run test:format
       - name: Typecheck library
         run: npm run typecheck
 

@@ -49,11 +49,11 @@ class Example extends Component {
 
 ### Props
 
-| Prop Name            | Type               | Required |
-| -------------------- | ------------------ | -------- |
-| pageNav              | `PageNavItem[]`    | No       |
-| indicatorStyle       | `CSSProperties`    | No       |
-| indicatorStyleActive | `CSSProperties`    | No       |
+| Prop Name            | Type            | Required |
+| -------------------- | --------------- | -------- |
+| pageNav              | `PageNavItem[]` | No       |
+| indicatorStyle       | `CSSProperties` | No       |
+| indicatorStyleActive | `CSSProperties` | No       |
 
 #### Page Nav Object
 
