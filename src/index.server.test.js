@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server'
 import FullPage from '.'
 
 describe('FullPage server rendering', () => {
-  it('renders an empty scroller without accessing browser globals', () => {
+  it('renders pages without accessing browser globals', () => {
     expect(typeof window).toBe('undefined')
     expect(
       renderToString(
@@ -15,6 +15,6 @@ describe('FullPage server rendering', () => {
           <div>Page</div>
         </FullPage>
       )
-    ).toBe('<div style="display:flex;flex-direction:column"></div>')
+    ).toContain('<div style="height:100vh;width:100vw">Page</div>')
   })
 })
