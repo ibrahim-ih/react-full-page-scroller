@@ -11,7 +11,6 @@ interface PageScrollerState {
   scrollPos: number
   pageIndex: number
   scrollAgain: boolean
-  children: React.ReactElement[]
 }
 
 export default class PageScroller extends React.Component<
@@ -24,13 +23,18 @@ export default class PageScroller extends React.Component<
   state: PageScrollerState = {
     scrollPos: 0,
     pageIndex: 0,
-    scrollAgain: true,
-    children: []
+    scrollAgain: true
   }
 
   componentDidMount(): void {
-    this.setState({ children: getValidChildren(this.props.children) })
     window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentDidUpdate(): void {
+    const lastPageIndex = Math.max(0, this.pages - 1)
+    if (this.state.pageIndex > lastPageIndex) {
+      this.setState({ pageIndex: lastPageIndex })
+    }
   }
 
   componentWillUnmount(): void {
@@ -86,7 +90,7 @@ export default class PageScroller extends React.Component<
     let pageNav: React.ReactElement<PageNavProps> | undefined
     let pageCount = 0
 
-    this.state.children.forEach((child) => {
+    getValidChildren(this.props.children).forEach((child) => {
       if (child.type === Page) {
         const page = child as React.ReactElement<PageProps>
         const navItem = page.props.pageNav?.[pageCount]
